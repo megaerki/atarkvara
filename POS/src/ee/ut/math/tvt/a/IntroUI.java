@@ -29,7 +29,7 @@ public class IntroUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Gamexh\\Desktop\\atarkvara\\POS\\img\\logo.jpg"));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.jpg"));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -70,7 +70,7 @@ public class IntroUI {
 		frame.getContentPane().add(lblMeeskondA);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Gamexh\\Desktop\\atarkvara\\POS\\img\\logo.jpg"));
+		lblNewLabel.setIcon(new ImageIcon("img/logo.jpg"));
 		lblNewLabel.setBounds(295, 150, 129, 96);
 		frame.getContentPane().add(lblNewLabel);
 		
