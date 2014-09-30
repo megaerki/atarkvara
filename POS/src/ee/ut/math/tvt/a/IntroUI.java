@@ -29,7 +29,7 @@ public class IntroUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("img/logo.jpg"));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IntroUI.class.getResource("/logo.jpg")));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -65,14 +65,20 @@ public class IntroUI {
 		frame.getContentPane().add(lblKaarelViigi);
 		
 		JLabel lblMeeskondA = new JLabel("Meeskond A");
-		lblMeeskondA.setBounds(23, 215, 119, 31);
+		lblMeeskondA.setBounds(90, 180, 119, 31);
 		lblMeeskondA.setFont(new Font("Vijaya", Font.PLAIN, 30));
 		frame.getContentPane().add(lblMeeskondA);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("img/logo.jpg"));
-		lblNewLabel.setBounds(295, 150, 129, 96);
+		lblNewLabel.setIcon(new ImageIcon(IntroUI.class.getResource("/logo.jpg")));
+		lblNewLabel.setBounds(320, 140, 129, 96);
 		frame.getContentPane().add(lblNewLabel);
+		
+		String versionNr = "@(#)0.1.9)@";
+		String versionSub = versionNr.substring(4, versionNr.length()-2);
+		JLabel lblNewLabelVersion = new JLabel("Versioon: " + versionSub);
+		lblNewLabelVersion.setBounds(320, 240, 200, 14);
+		frame.getContentPane().add(lblNewLabelVersion);
 		
 		JLabel lblKasnakantgmailcom = new JLabel("kasnakant@gmail.com");
 		lblKasnakantgmailcom.setBounds(177, 97, 171, 14);
