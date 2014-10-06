@@ -5,20 +5,27 @@ package ee.ut.math.tvt.a;
 
 import java.awt.EventQueue;
 
-public class Intro {
-			
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					IntroUI window = new IntroUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+import javax.swing.UIManager;
 
+public class Intro {
+				
+	public static void main(String[] args) {
+		
+		//Lisa JGoodies windowsi v2ljan2gemine Java default asemel
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		//Loo avaaken ja tee see n2htavaks
+		try {
+			IntroUI window = new IntroUI();
+			window.frame.setVisible(true);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }

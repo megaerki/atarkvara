@@ -74,7 +74,7 @@ public class IntroUI {
 		lblNewLabel.setBounds(320, 140, 129, 96);
 		frame.getContentPane().add(lblNewLabel);
 		
-		String versionNr = "@(#)0.1.9)@";
+		String versionNr = "@(#)0.1.12)@";
 		String versionSub = versionNr.substring(4, versionNr.length()-2);
 		JLabel lblNewLabelVersion = new JLabel("Versioon: " + versionSub);
 		lblNewLabelVersion.setBounds(320, 240, 200, 14);
