@@ -12,12 +12,14 @@
 	<property name="doc.dir" value="${build.dir}/doc"/>
 	<property name="img.dir" value="${basedir}/img"/>
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
+	<property name="log4j.properties" value="${basedir}/log4j.properties" />
+	<property name="lib.dir" value="${basedir}/lib" />
 
 	<!-- Definitions of classpath variants used for different tasks -->
 	
 	<path id="compile.classpath">
-			<fileset dir="lib">
-				<include name="*.jar"/>
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
 			</fileset>
 		</path>
 
@@ -27,6 +29,12 @@
 		<pathelement location="${conf.dir}"/>
 	</path>
 	
+	<path id="log4j.classpath">
+	        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+	    </path>
+	
+	
+
 	<!-- Käivita programm -->
 
 	<target name="run" depends="build" description="Run POS application">
@@ -44,15 +52,18 @@
 		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
+			classpathref="log4j.classpath"
 			debug="true"
             debuglevel="lines,vars,source"
             encoding="utf-8"
             compiler="modern"
-            target="1.7"
-            source="1.7"
+            target="1.8"
+            source="1.8"
 			includeantruntime="false">
 		</javac>
-	</target>
+
+		
+	</target> 
 	
 	<!-- Käivita loodud jar fail -->
 	
@@ -60,8 +71,15 @@
 		
 		<copy todir="${dist.dir}">
 				    <fileset file="application.properties"/>
+			</copy>
+		
+		<copy todir="${dist.dir}">
+					<fileset file="log4j.properties"/>
 				</copy>
 		
+		<copy todir="${dist.dir}/lib/">
+						    <fileset file="$(dist.dir}/lib/log4j-1.2.17.jar"/>
+						</copy>
 		<java jar="${dist.dir}/A.jar" fork="yes" />
 	</target>
 	
