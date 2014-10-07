@@ -12,6 +12,8 @@
 	<property name="doc.dir" value="${build.dir}/doc"/>
 	<property name="img.dir" value="${basedir}/img"/>
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
+	<property name="log4j.properties" value="${basedir}/log4j.properties" />
+	<property name="lib.log4j" value="${basedir}/lib/log4j-1.2.17.jar" />
 
 	<!-- Definitions of classpath variants used for different tasks -->
 	
@@ -52,6 +54,8 @@
             source="1.7"
 			includeantruntime="false">
 		</javac>
+
+		
 	</target>
 	
 	<!-- Käivita loodud jar fail -->
