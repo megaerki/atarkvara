@@ -57,8 +57,15 @@
 	<!-- Käivita loodud jar fail -->
 	
 	<target name="jrun" depends="dist" description="builds and runs distributable jar file">
+		
+		<copy todir="${dist.dir}">
+				    <fileset file="application.properties"/>
+				</copy>
+		
 		<java jar="${dist.dir}/A.jar" fork="yes" />
 	</target>
+	
+	
 	
 	<!-- Loo kompileeritud failidest jar fail -->
 	

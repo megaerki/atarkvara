@@ -86,7 +86,7 @@ public class IntroUI {
 		frame.getContentPane().add(lblLogo);
 		
 		
-		String  versionNr = "@(#)0.1.14)@";
+		String  versionNr = "@(#)0.1.20)@";
 		String versionSub = versionNr.substring(4, versionNr.length()-2);
 		JLabel lblNewLabelVersion = new JLabel("Versioon: " + versionSub);
 		lblNewLabelVersion.setBounds(320, 240, 200, 14);
