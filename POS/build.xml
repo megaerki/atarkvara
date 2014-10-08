@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." name="POS" default="build">
 
-	<!-- Defineeri ja impordi muutujad -->
-
-	<property file="application.properties"/>
+	<!-- Defineeri muutujad -->
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
 	<property name="src.dir" value="${basedir}/src"/>
@@ -12,47 +10,52 @@
 	<property name="doc.dir" value="${build.dir}/doc"/>
 	<property name="img.dir" value="${basedir}/img"/>
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
-	<property name="log4j.properties" value="${basedir}/log4j.properties" />
 	<property name="lib.dir" value="${basedir}/lib" />
 
-	<!-- Definitions of classpath variants used for different tasks -->
+<!-- _______________________________________________________________________________________ -->
 	
+	<!-- Definitions of classpath variants used for different tasks -->
 	<path id="compile.classpath">
-			<fileset dir="${lib.dir}">
-				<include name="**/*.jar"/>
-			</fileset>
-		</path>
-
-	<path id="POS.classpath">
-		<pathelement location="${build.classes.dir}"/>
-		<!-- configuration -->
-		<pathelement location="${conf.dir}"/>
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
 	</path>
 	
-	<path id="log4j.classpath">
-	        <fileset dir="${lib.dir}" includes="**/*.jar"/>
-	    </path>
+	<path id="POS.classpath">
+		<pathelement location="${build.classes.dir}"/>
+		<fileset dir="${lib.dir}">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	</path>	
 	
-	
+<!-- ______________________________________RUN______________________________________________ -->
 
 	<!-- Käivita programm -->
-
 	<target name="run" depends="build" description="Run POS application">
+		
+		<!-- Kopeeri logo build kausta -->
 		<copy todir="${build.classes.dir}">
 		    <fileset dir="${img.dir}"/>
 		</copy>
+		
+		<!-- Käivita .class kompileeritud programm -->
 		<java classname="ee.ut.math.tvt.a.Intro" classpathref="POS.classpath" fork="yes" />
 	</target>
 	
+<!-- _____________________________________BUILD_____________________________________________ -->
+	
 	<!-- Kompileeri. Enne seda puhasta ja uuenda versiooni informatsiooni -->
-
 	<target name="build" depends="clean" description="Build POS application">
+		
+		<!-- Loo kasutad kompileeritud failidele -->
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
+		
+		<!-- Kompileeri programm -->
 		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
-			classpathref="log4j.classpath"
+			classpathref="POS.classpath"
 			debug="true"
             debuglevel="lines,vars,source"
             encoding="utf-8"
@@ -60,53 +63,76 @@
             target="1.8"
             source="1.8"
 			includeantruntime="false">
+			<classpath refid="compile.classpath"/>
 		</javac>
-
-		
 	</target> 
+
+<!-- ______________________________________JRUN_____________________________________________ -->
 	
 	<!-- Käivita loodud jar fail -->
-	
 	<target name="jrun" depends="dist" description="builds and runs distributable jar file">
 		
+		<!-- Kopeeri application.properties fail dist kausta -->
 		<copy todir="${dist.dir}">
-				    <fileset file="application.properties"/>
-			</copy>
+			<fileset file="application.properties"/>
+		</copy>
 		
-		<copy todir="${dist.dir}">
-					<fileset file="log4j.properties"/>
-				</copy>
-		
-		<copy todir="${dist.dir}/lib/">
-						    <fileset file="$(dist.dir}/lib/log4j-1.2.17.jar"/>
-						</copy>
+		<!-- Käivita loodud jar executable fail -->
 		<java jar="${dist.dir}/A.jar" fork="yes" />
 	</target>
 	
-	
-	
+<!-- ______________________________________DIST_____________________________________________ -->	
+
 	<!-- Loo kompileeritud failidest jar fail -->
-	
 	<target name="dist" depends="clean, version" description="Generates jar file">
+		
+		<!-- Loo kaustad .class failide loomiseks -->
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
+		
+		<!-- Kompileeri -->
 		<javac
             srcdir="${src.dir}"
             destdir="${build.classes.dir}"
+			classpathref="POS.classpath"
+			debug="true"
+            debuglevel="lines,vars,source"
+            encoding="utf-8"
+            compiler="modern"
+            target="1.8"
+            source="1.8"
 			includeantruntime="false">
+			<classpath refid="compile.classpath"/>
 		</javac>
+		
+		<!-- Loo dist kaust jar ja teistele lisafailidele -->
 		<mkdir dir="${dist.dir}"/>
-		 <jar destfile="${dist.dir}/A.jar">
+		
+		<!-- Loo jar executable -->
+		<jar destfile="${dist.dir}/A.jar">
 		    <fileset dir="${build.classes.dir}"/>
 		 	<fileset dir="${img.dir}"/>
+			
+			<!-- Kopeeri kogu lib kaustas olevate jar failide sisu lõppfaili A.jar -->
+			<restrict>
+			     <name name="**/*.class"/>
+			     <archives>
+			     	<zips>
+			        	<fileset dir="${lib.dir}" includes="**/*.jar"/>
+			     	</zips>
+			    </archives>
+			</restrict>
+			
+			<!-- Jar failis vajalik kirje JVM'ile -->
 	 	    <manifest>
-	           <attribute name="Main-Class" value="ee.ut.math.tvt.a.Intro"/>
+	        	<attribute name="Main-Class" value="ee.ut.math.tvt.a.Intro"/>
 	        </manifest>
 		</jar>
 	</target>
 	
+<!-- _______________________________________VERSION_________________________________________ -->
+	
 	<!-- Kirjuta IntroUI.java faili uuendatud versiooni informatsioon -->
-		
 	<target name="version" description="Increments version information and add to the source code">
 		<propertyfile file="version.properties">
 		<entry key="build.revision.number" type="int" operation="+" value="1"/>
@@ -130,6 +156,8 @@
 			<fileset dir="${src.dir}" includes="**/*.java"/>
 		</javadoc>
 	</target>
+	
+<!-- _______________________________________CLEAN___________________________________________ -->
 
 	<!-- Puhasta -->
 	<target name="clean" description="Clean up build system results">

@@ -20,6 +20,9 @@ import java.awt.Canvas;
 
 import javax.swing.ImageIcon;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import java.awt.Panel;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
@@ -28,11 +31,15 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class IntroUI {
+	
+	static final Logger log = Logger.getLogger(IntroUI.class);
 
 	public JFrame frame;
 
 	public IntroUI() throws IOException {
+		PropertyConfigurator.configure("application.properties");
 		initialize();
+		log.info("IntroUI aken avatud");
 	}
 
 	/**
@@ -55,8 +62,6 @@ public class IntroUI {
 		Properties props = new Properties();
 		FileInputStream fis = new FileInputStream("application.properties");
 		props.load(fis);
-		
-	
 		
 		JLabel lblProjektiJuht = new JLabel(props.getProperty("projekt.juht")+", " + props.getProperty("projekt.juht.meil"));
 		lblProjektiJuht.setBounds(23, 49, 220, 16);
@@ -85,8 +90,7 @@ public class IntroUI {
 		lblLogo.setBounds(320, 140, 129, 96);
 		frame.getContentPane().add(lblLogo);
 		
-		
-		String  versionNr = "@(#)0.1.25)@";
+		final String  versionNr = "@(#)0.2.1)@";
 		String versionSub = versionNr.substring(4, versionNr.length()-2);
 		JLabel lblNewLabelVersion = new JLabel("Versioon: " + versionSub);
 		lblNewLabelVersion.setBounds(320, 240, 200, 14);
