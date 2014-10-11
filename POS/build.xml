@@ -28,6 +28,15 @@
 	    </fileset>
 	</path>	
 	
+<!-- ______________________________________RUNC______________________________________________ -->
+	
+	<!-- Käivita programm konsoolis -->
+	<target name="runc" depends="build" description="Run the application (console)">
+		<java classname="ee.ut.math.tvt.a.Intro" classpathref="POS.classpath" fork="yes">
+			<arg value="console" />
+		</java>
+	</target>
+	
 <!-- ______________________________________RUN______________________________________________ -->
 
 	<!-- Käivita programm -->
