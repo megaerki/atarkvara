@@ -174,5 +174,30 @@
 		<delete dir="${dist.dir}"/>
 	</target>
 
+<!-- _____________________________________GIT COMMIT________________________________________ -->
+
+	<target name="git_commit" description="Commit and push changes to github">
+		
+		<input
+		    message="Sisesta kasutajanimi: "
+		    addproperty="USERNAME"
+		  />
+		
+		<input
+			    message="Sisesta parool: "
+			    addproperty="PASSWORD"
+			  />
+		
+		<input
+			    message="Sisesta kommentaar: "
+			    addproperty="COMMENT"
+			  />
+		
+		<exec dir="${basedir}" executable="ant.bat">
+		  	<arg line="${USERNAME} ${PASSWORD} {COMMENT}"/>
+		</exec>
+	
+	</target>
+	
 </project>
 
