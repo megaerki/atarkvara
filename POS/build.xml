@@ -174,30 +174,53 @@
 		<delete dir="${dist.dir}"/>
 	</target>
 
-<!-- _____________________________________GIT COMMIT________________________________________ -->
+<!-- _____________________________________GIT GET INFO_______________________________________ -->
 
-	<target name="git_commit" description="Commit and push changes to github">
+	<target name="git_info" description="Commit and push changes to github">
 		
 		<input
 		    message="Sisesta kasutajanimi: "
 		    addproperty="USERNAME"
 		  />
-		
+
 		<input
 			    message="Sisesta parool: "
 			    addproperty="PASSWORD"
 			  />
-		
 		<input
 			    message="Sisesta kommentaar: "
 			    addproperty="COMMENT"
 			  />
 		
+		
+	
+	</target>
+
+<!-- _____________________________________GIT COMMIT________________________________________ -->
+		
+	
+	<target name="git_commit" depends="git_info" description="Commit and psuh to github">
 		<exec dir="${basedir}" executable="ant.bat">
 		  	<arg line="${USERNAME} ${PASSWORD} ${COMMENT}"/>
 		</exec>
-	
 	</target>
+		
+<!-- _____________________________________GIT TAG___________________________________________ -->
+		
+	<input
+	    message="Sisesta kodutöö number: "
+	    addproperty="n_count"
+	/>
 	
+	<target name="git_tag" depends="git_info" description="Create a tag and push">
+		
+		<exec dir="${basedir}" executable="cmd.exe">
+		  	<arg line="/c git tag -a homework_${n_count} -m '${COMMENT}'"/>
+		</exec>
+		<exec dir="${basedir}" executable="cmd.exe">
+			<arg line="/c git push --tags https://${USERNAME}:${PASSWORD}@github.com/megaerki/atarkvara.git"/>
+		</exec>
+	</target>
+		
 </project>
 
