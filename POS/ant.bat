@@ -9,4 +9,4 @@ git add --all .
 
 git commit -m "%3"
 
-git push hhtps//%USERNAME%:%PASSWORD%@github.com/megaerki/atarkvara.git
+git push https//%USERNAME%:%PASSWORD%@github.com/megaerki/atarkvara.git
