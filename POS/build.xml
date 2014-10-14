@@ -48,7 +48,10 @@
 		</copy>
 		
 		<!-- Käivita .class kompileeritud programm -->
-		<java classname="ee.ut.math.tvt.a.Intro" classpathref="POS.classpath" fork="yes" />
+		<java classname="ee.ut.math.tvt.a.Intro" classpathref="POS.classpath" fork="yes">
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000" />
+		</java>
 	</target>
 	
 <!-- _____________________________________BUILD_____________________________________________ -->
@@ -206,13 +209,13 @@
 	</target>
 		
 <!-- _____________________________________GIT TAG___________________________________________ -->
-		
-	<input
-	    message="Sisesta kodutöö number: "
-	    addproperty="n_count"
-	/>
-	
+			
 	<target name="git_tag" depends="git_info" description="Create a tag and push">
+		
+		<input
+			    message="Sisesta kodutöö number: "
+			    addproperty="n_count"
+		/>
 		
 		<exec dir="${basedir}" executable="cmd.exe">
 		  	<arg line="/c git tag -a homework_${n_count} -m '${COMMENT}'"/>
