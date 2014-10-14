@@ -7,6 +7,6 @@ SET PASSWORD=%2
 
 git add --all .
 
-git commit -m "%3"
+git commit -m "%3%"
 
 git push https://%USERNAME%:%PASSWORD%@github.com/megaerki/atarkvara.git
