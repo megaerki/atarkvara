@@ -194,7 +194,7 @@
 			  />
 		
 		<exec dir="${basedir}" executable="ant.bat">
-		  	<arg line="${USERNAME} ${PASSWORD} {COMMENT}"/>
+		  	<arg line="${USERNAME} ${PASSWORD} ${COMMENT}"/>
 		</exec>
 	
 	</target>
