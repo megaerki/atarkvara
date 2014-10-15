@@ -29,6 +29,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 			return item.getPrice();
 		case 3:
 			return item.getQuantity();
+
 		}
 		throw new IllegalArgumentException("Column index out of range");
 	}

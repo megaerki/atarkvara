@@ -14,6 +14,8 @@ public class StockItem implements Cloneable, DisplayableItem {
     private String description;
     
     private int quantity;
+    
+   
 
     /**
      * Constucts new <code>StockItem</code> with the specified values.
@@ -36,6 +38,7 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.price = price;
         this.quantity = quantity;
     }
+
 
     /**
      * Constructs new  <code>StockItem</code>.
@@ -82,9 +85,12 @@ public class StockItem implements Cloneable, DisplayableItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+	
+	
+		
 
     public String toString() {
-        return id + " " + name + " " + description + " " + price;
+        return id + " " + name + " " + description + " " + price ;
     }
 
     /**
@@ -98,6 +104,7 @@ public class StockItem implements Cloneable, DisplayableItem {
             case 1: return name;
             case 2: return new Double(price);
             case 3: return new Integer(quantity);
+            
             default: throw new RuntimeException("invalid column!");
         }
     }
@@ -108,5 +115,6 @@ public class StockItem implements Cloneable, DisplayableItem {
             new StockItem(getId(), getName(), getDescription(), getPrice(), getQuantity());
         return item;
     }
-		
+
+
 }
