@@ -25,7 +25,7 @@ public class SalesSystemUI extends JFrame {
 
   private static final Logger log = Logger.getLogger(SalesSystemUI.class);
 
-  private final SalesDomainController domainController;
+  //private final SalesDomainController domainController;
 
   // Warehouse model
   private SalesSystemModel model;
@@ -40,7 +40,7 @@ public class SalesSystemUI extends JFrame {
    * @param domainController Sales domain controller.
    */
   public SalesSystemUI(SalesDomainController domainController) {
-    this.domainController = domainController;
+    //this.domainController = domainController;
     this.model = new SalesSystemModel(domainController);
 
     // Create singleton instances of the tab classes
@@ -62,7 +62,7 @@ public class SalesSystemUI extends JFrame {
 
     // size & location
     int width = 600;
-    int height = 400;
+    int height = 500;
     setSize(width, height);
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     setLocation((screen.width - width) / 2, (screen.height - height) / 2);
