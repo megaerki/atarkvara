@@ -218,27 +218,23 @@ public class PurchaseItemPanel extends JPanel {
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
             int quantity;
-            
+          
             try {
                 quantity = Integer.parseInt(quantityField.getText());
-                logger.debug(quantity);
                 if (quantity > stockItem.getQuantity()) {
                 	throw new SalesSystemException();
 				}
                 else{
-                	logger.debug("Else  was reached..");
                 	stockItem.setQuantity(stockItem.getQuantity() - quantity);
-                	model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));
+                	model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));    				
                 }
             }
             catch (NumberFormatException ex) {
-            	logger.debug("ex reached");
-                quantity = 1;
+            	quantity = 1;
             }
             
             catch (SalesSystemException e) {
-            	logger.debug("e reached");
-				notEnoughItemsWarning();
+            	notEnoughItemsWarning();
             }
         }        
         
