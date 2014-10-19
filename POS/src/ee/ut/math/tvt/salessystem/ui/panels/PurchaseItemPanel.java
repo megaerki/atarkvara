@@ -3,9 +3,11 @@ package ee.ut.math.tvt.salessystem.ui.panels;
 import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -26,10 +28,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
 
 /**
  * Purchase pane + shopping cart tabel UI.
@@ -38,6 +43,7 @@ public class PurchaseItemPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     
+    private static final Logger logger = Logger.getLogger(PurchaseItemPanel.class);
     // Text field on the dialogPane
    
     private JComboBox<StockItem> itemSelector;
@@ -93,7 +99,7 @@ public class PurchaseItemPanel extends JPanel {
 
         // Create the panel
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6, 2));
+        panel.setLayout(new GridLayout(5, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
         // Initialize the textfields
@@ -101,22 +107,21 @@ public class PurchaseItemPanel extends JPanel {
         itemSelector = new JComboBox<StockItem>();
         //SalesDomainControllerImpl salesDomain= new SalesDomainControllerImpl();    
         //dataset=salesDomain.getList();
-        
-        itemSelector.addItemListener(new ItemListener(){
-        	public void itemStateChanged(ItemEvent e){
-        		if (e.getStateChange() == ItemEvent.SELECTED){
-        			fillDialogFields();
-        		}
-        	}
-        });
-        
-        
-        
         barCodeField = new JTextField();
         quantityField = new JTextField("1");
         //nameField = new JTextField();
         priceField = new JTextField();
 
+        //Changes the price and qty fields if a new item is chosen
+        itemSelector.addItemListener(new ItemListener(){
+        	public void itemStateChanged(ItemEvent e){
+        		if (e.getStateChange() == ItemEvent.SELECTED){
+        			fillDialogFields();
+        		}
+        		//logger.debug("Dialog fields were populated.");
+        	}
+        });
+        
         // Fill the dialog fields if the bar code text field loses focus
         /*barCodeField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
@@ -165,7 +170,7 @@ public class PurchaseItemPanel extends JPanel {
         // Create and add the button
         addItemButton = new JButton("Add to cart");
         addItemButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {     		
                 addItemEventHandler();
             }
         });
@@ -178,12 +183,10 @@ public class PurchaseItemPanel extends JPanel {
     // Fill dialog with data from the "database".
     private void fillDialogFields() {
         //StockItem stockItem = getStockItemByBarcode();
-    // 
-    StockItem stockItem = (StockItem)
-    itemSelector.getSelectedItem();
+    	StockItem stockItem = (StockItem)
+    	itemSelector.getSelectedItem();
     
-        
-        if (stockItem != null) {
+    	if (stockItem != null) {
             //nameField.setText(stockItem.getName());
             String priceString = String.valueOf(stockItem.getPrice());
             priceField.setText(priceString);
@@ -196,9 +199,9 @@ public class PurchaseItemPanel extends JPanel {
 
     // Search the warehouse for a StockItem with the bar code entered
     // to the barCode textfield.
-    private StockItem getStockItemByBarcode() {
+    public StockItem getStockItemByBarcode() {
         try {
-            int code = Integer.parseInt(barCodeField.getToolTipText());
+            int code = Integer.parseInt(barCodeField.getText());
             return model.getWarehouseTableModel().getItemById(code);
         } catch (NumberFormatException ex) {
             return null;
@@ -210,20 +213,42 @@ public class PurchaseItemPanel extends JPanel {
     /**
      * Add new item to the cart.
      */
-    private void addItemEventHandler() {
+    public void addItemEventHandler()  {
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
             int quantity;
+            
             try {
                 quantity = Integer.parseInt(quantityField.getText());
-            } catch (NumberFormatException ex) {
+                logger.debug(quantity);
+                if (quantity > stockItem.getQuantity()) {
+                	throw new SalesSystemException();
+				}
+                else{
+                	logger.debug("Else  was reached..");
+                	stockItem.setQuantity(stockItem.getQuantity() - quantity);
+                	model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));
+                }
+            }
+            catch (NumberFormatException ex) {
+            	logger.debug("ex reached");
                 quantity = 1;
             }
-            model.getCurrentPurchaseTableModel()
-                .addItem(new SoldItem(stockItem, quantity));
-        }
+            
+            catch (SalesSystemException e) {
+            	logger.debug("e reached");
+				notEnoughItemsWarning();
+            }
+        }        
+        
     }
+    
+    private void notEnoughItemsWarning() {
+    	JOptionPane.showMessageDialog(this, "There not enough of this item in stock", "Attention", JOptionPane.WARNING_MESSAGE);
+    	logger.debug("User tried to add item, there was not enough of this item");
+    }
+    
 
     /**
      * Sets whether or not this component is enabled.
