@@ -1,19 +1,28 @@
 package ee.ut.math.tvt.salessystem.ui.panels;
 
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
+
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,6 +40,8 @@ import org.apache.log4j.Logger;
  * Purchase pane + shopping cart tabel UI.
  */
 public class PurchaseItemPanel extends JPanel {
+	
+	public static  boolean addCart=false;
 
     private static final long serialVersionUID = 1L;
     
@@ -67,7 +78,11 @@ public class PurchaseItemPanel extends JPanel {
         setEnabled(false);
     }
 
-    // shopping cart pane
+    public PurchaseItemPanel() {
+		
+	}
+
+	// shopping cart pane
     private JComponent drawBasketPane() {
 
         // Create the basketPane
@@ -163,6 +178,9 @@ public class PurchaseItemPanel extends JPanel {
         addItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {     		
                 addItemEventHandler();
+                
+                
+                
             }
         });
 
@@ -170,7 +188,13 @@ public class PurchaseItemPanel extends JPanel {
 
         return panel;
     }
-
+    
+    public static boolean getBoolean(){
+    	return addCart;
+    }
+    private void setBoolean(){
+    	addCart=true;
+    }
     // Fill dialog with data from the "database".
     private void fillDialogFields() {
         //StockItem stockItem = getStockItemByBarcode();
@@ -205,6 +229,8 @@ public class PurchaseItemPanel extends JPanel {
      * Add new item to the cart.
      */
     public void addItemEventHandler()  {
+    	setBoolean();
+    	
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
         if (stockItem != null) {
@@ -218,7 +244,7 @@ public class PurchaseItemPanel extends JPanel {
                 else{
                 	stockItem.setQuantity(stockItem.getQuantity() - quantity);
                 	model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));    				
-                }
+                }	
             }
             catch (NumberFormatException ex) {
             	quantity = 1;

@@ -1,18 +1,31 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -34,8 +47,12 @@ public class PurchaseTab {
   private PurchaseItemPanel purchasePane;
 
   private SalesSystemModel model;
-
-
+  public   boolean addCart;
+  private  static  double changeMoney;
+  private static String chanMoney;
+  
+  
+  
   public PurchaseTab(SalesDomainController controller,
       SalesSystemModel model)
   {
@@ -102,12 +119,21 @@ public class PurchaseTab {
     return b;
   }
 
+private void getBoolean(){
+	
+	addCart=PurchaseItemPanel.getBoolean();
+}
+
+  
   // Creates the "Confirm" button
   private JButton createConfirmButton() {
     JButton b = new JButton("Confirm");
     b.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         submitPurchaseButtonClicked();
+        getBoolean();
+        if (addCart){ confirmOrder();}
+        
       }
     });
     b.setEnabled(false);
@@ -163,6 +189,99 @@ public class PurchaseTab {
   }
 
 
+  public void confirmOrder(){
+
+	  final JFrame confirm = new JFrame("Confirm sale");
+	  confirm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	  //confirm.getContentPane().add(emptyLabel, BorderLayout.CENTER);
+	  JPanel panel = new JPanel();
+	  panel.setLayout(new GridLayout(4, 3));
+	  confirm.add(panel);
+	  confirm.setSize(300,150);
+	  confirm.setLocation(200, 200);
+	  confirm.setVisible(true);
+	  
+	  JLabel sum=new JLabel("The sum of order:");
+	  String sum1=String.valueOf(SoldItem.getSum());
+	  JTextField orderSum=new JTextField(sum1);
+	  orderSum.setEditable(false);
+	  
+	  JLabel pay=new JLabel("Payment amount:");
+	  final JTextField pay1=new JTextField();
+	  
+	  JLabel cha=new JLabel("Change amount:");
+	  final JTextField cha1=new JTextField();
+	  JButton acc = new JButton("Accept");
+	  JButton can= new JButton("Cancel");
+	  
+	  panel.add(sum);
+	  panel.add(orderSum);
+	  panel.add(pay);
+	  panel.add(pay1);
+	  panel.add(cha);
+	  panel.add(cha1);
+	  panel.add(acc);
+	  panel.add(can);
+	  
+	  
+	  can.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {     		
+        	confirm.setVisible(false);
+              
+              
+              
+          }
+      });
+	  acc.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {     		
+        	//saves order on click
+              
+              
+              
+          }
+      });
+	  
+	 pay1.getDocument().addDocumentListener(new DocumentListener() {
+
+		public void changedUpdate(DocumentEvent arg0) {
+			money();
+			
+		}
+
+		public void insertUpdate(DocumentEvent arg0) {
+			money();
+			
+		}
+
+		public void removeUpdate(DocumentEvent arg0) {
+			money();
+			
+		}
+		
+		    public void money(){
+		    	if(pay1.getText().equals("")){
+		    	}
+		    	else{
+		    	changeMoney=Double.parseDouble(pay1.getText());
+		    	
+		    	
+		    	chanMoney=String.valueOf(SoldItem.getSum()-changeMoney);
+		    	String chanMoney2= chanMoney.replaceAll("-","");
+		    	if(SoldItem.getSum()>changeMoney){
+		    		cha1.setText("Payment to small");
+		    	}
+		    	else{
+		    	cha1.setText(chanMoney2);
+		    	}
+		    	}
+		    	
+		    }
+	 });
+  }
+  
+
+  
+  
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
     log.info("Sale complete");
