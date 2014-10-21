@@ -84,7 +84,8 @@ public class StockItem implements Cloneable, DisplayableItem {
 	
 		
 
-    public String toString() {
+    @Override
+	public String toString() {
         return id + " " + name + " " + description + " " + price ;
     }
 
@@ -105,7 +106,8 @@ public class StockItem implements Cloneable, DisplayableItem {
     }
     
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         StockItem item =
             new StockItem(getId(), getName(), getDescription(), getPrice(), getQuantity());
         return item;

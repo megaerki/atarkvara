@@ -35,7 +35,6 @@ public class Intro {
 			ConsoleUI cui = new ConsoleUI(domainController);
 			cui.run();
 		} else {
-
 			IntroUI introUI = new IntroUI();
 			introUI.frame.setVisible(true);
 			introUI.frame.setAlwaysOnTop(true);
@@ -44,6 +43,7 @@ public class Intro {
 			ui.setVisible(true);
 
 			introUI.frame.setAlwaysOnTop(false);
+			
 			try {
 				Thread.sleep(3000);
 				log.info("Intro aken suletud");

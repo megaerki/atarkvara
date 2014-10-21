@@ -1,32 +1,14 @@
 package ee.ut.math.tvt.a;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-
-import javax.swing.JTextField;
-
-import java.awt.GridBagConstraints;
-
 import javax.swing.JLabel;
 
-import java.awt.Insets;
 import java.awt.Font;
-import java.awt.Canvas;
-
 import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
-import java.awt.Panel;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -37,7 +19,6 @@ public class IntroUI {
 	public JFrame frame;
 
 	public IntroUI() throws IOException {
-		PropertyConfigurator.configure("application.properties");
 		initialize();
 		log.info("IntroUI aken avatud");
 	}
@@ -90,7 +71,7 @@ public class IntroUI {
 		lblLogo.setBounds(320, 140, 129, 96);
 		frame.getContentPane().add(lblLogo);
 		
-		final String  versionNr = "@(#)0.2.15)@";
+		final String  versionNr = "@(#)0.2.30)@";
 		String versionSub = versionNr.substring(4, versionNr.length()-2);
 		JLabel lblNewLabelVersion = new JLabel("Versioon: " + versionSub);
 		lblNewLabelVersion.setBounds(320, 240, 200, 14);
