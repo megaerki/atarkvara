@@ -15,6 +15,8 @@ public class StockItem implements Cloneable, DisplayableItem {
     
     private int quantity;
     
+    private double sum;
+    
    
 
     /**
@@ -32,6 +34,7 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.description = desc;
         this.price = price;
         this.quantity = quantity;
+        
     }
 
 
@@ -80,14 +83,26 @@ public class StockItem implements Cloneable, DisplayableItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    
+    public double getSum() {
+        return sum;
+    }
+
+    public void setSum(double price) {
+        this.sum = price;
+    }
 	
 	
 		
 
     @Override
 	public String toString() {
-        return id + " " + name + " " + description + " " + price ;
+        return  name ;
     }
+//	public String toString() {
+//        return id + " " + name + " " + description + " " + price ; // vana praegusega kuvab ainult toote nime drop listis
+//    }
+
 
     /**
      * Method for querying the value of a certain column when StockItems are shown
@@ -100,6 +115,7 @@ public class StockItem implements Cloneable, DisplayableItem {
             case 1: return name;
             case 2: return new Double(price);
             case 3: return new Integer(quantity);
+            
             
             default: throw new RuntimeException("invalid column!");
         }

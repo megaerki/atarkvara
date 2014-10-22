@@ -11,8 +11,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
     private StockItem stockItem;
     
     private String name;
-    private static Integer quantity;
-    private static double price;
+    private  Integer quantity;
+    private  double price;
     
     public SoldItem(StockItem stockItem, int quantity) {
         this.stockItem = stockItem;
@@ -55,7 +55,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
         this.quantity = quantity;
     }
 
-    public static double getSum() {
+    public  double getSum() {
         return price * ((double) quantity);
     }
 

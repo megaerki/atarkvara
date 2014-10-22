@@ -200,9 +200,9 @@ private void getBoolean(){
 	  confirm.setSize(300,150);
 	  confirm.setLocation(200, 200);
 	  confirm.setVisible(true);
-	  
+
 	  JLabel sum=new JLabel("The sum of order:");
-	  String sum1=String.valueOf(SoldItem.getSum());
+	  String sum1=String.valueOf(PurchaseItemPanel.getSum());///pooleli
 	  JTextField orderSum=new JTextField(sum1);
 	  orderSum.setEditable(false);
 	  
@@ -263,11 +263,11 @@ private void getBoolean(){
 		    	}
 		    	else{
 		    	changeMoney=Double.parseDouble(pay1.getText());
-		    	
-		    	
-		    	chanMoney=String.valueOf(SoldItem.getSum()-changeMoney);
+		    	 
+		    	double sum = PurchaseItemPanel.getSum();
+		    	chanMoney=String.valueOf(sum-changeMoney);
 		    	String chanMoney2= chanMoney.replaceAll("-","");
-		    	if(SoldItem.getSum()>changeMoney){
+		    	if(sum>changeMoney){
 		    		cha1.setText("Payment to small");
 		    	}
 		    	else{

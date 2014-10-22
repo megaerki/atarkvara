@@ -60,6 +60,7 @@ public class PurchaseItemPanel extends JPanel {
     
     // Warehouse model
     private SalesSystemModel model;
+    private static double sum;
 
     /**
      * Constructs new purchase item panel.
@@ -195,14 +196,21 @@ public class PurchaseItemPanel extends JPanel {
     private void setBoolean(){
     	addCart=true;
     }
+    public static double getSum(){
+	 return sum;
+    }
     // Fill dialog with data from the "database".
     private void fillDialogFields() {
         //StockItem stockItem = getStockItemByBarcode();
     	StockItem stockItem = (StockItem)
     	itemSelector.getSelectedItem();
-    
+    	
+    	
     	if (stockItem != null) {
             //nameField.setText(stockItem.getName());
+    		stockItem.setSum(stockItem.getPrice());
+    		double price = stockItem.getSum();
+    		sum=price;
             String priceString = String.valueOf(stockItem.getPrice());
             priceField.setText(priceString);
             String barCodeString = String.valueOf(stockItem.getId());
