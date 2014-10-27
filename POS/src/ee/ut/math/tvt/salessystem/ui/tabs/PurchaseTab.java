@@ -263,7 +263,7 @@ private void getBoolean(){
 		
 		    public void money(){
 		    	try{
-		    	if(pay1.getText().equals("") || pay1.getText().contains("[a-zA-Z.]+") ){
+		    	if(pay1.getText().equals("") || pay1.getText().contains("[a-zA-Z,]+") ){
 		    		
 		    	}
 		    	else{

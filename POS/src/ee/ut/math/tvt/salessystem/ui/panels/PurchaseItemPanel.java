@@ -248,10 +248,14 @@ public class PurchaseItemPanel extends JPanel {
         StockItem stockItem = getStockItemByBarcode();
 		
 		double price = stockItem.getPrice();
+		try{
 		int quantity1=Integer.parseInt(quantityField.getText());
-
 		setSum(price,quantity1);
-		
+		}
+		catch(NumberFormatException ex){
+			
+			WrongInput();
+		}
 		
         if (stockItem != null) {
             int quantity;
@@ -280,6 +284,12 @@ public class PurchaseItemPanel extends JPanel {
     private void notEnoughItemsWarning() {
     	JOptionPane.showMessageDialog(this, "There not enough of this item in stock", "Attention", JOptionPane.WARNING_MESSAGE);
     	logger.debug("User tried to add item, there was not enough of this item");
+    }
+    
+    
+    private void WrongInput() {
+    	JOptionPane.showMessageDialog(this, "Please enter a positive number for amount.", "Attention", JOptionPane.WARNING_MESSAGE);
+    	logger.debug("User did not enter a valid number as a amount");
     }
     
 
