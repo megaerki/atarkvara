@@ -6,26 +6,24 @@
 	<property name="build.classes.dir" value="${build.dir}/classes"/>
 	<property name="src.dir" value="${basedir}/src"/>
 	<property name="dist.dir" value="${basedir}/build/jar"/>
-	<property name="conf.dir" value="${basedir}/etc"/>
 	<property name="doc.dir" value="${build.dir}/doc"/>
 	<property name="img.dir" value="${basedir}/img"/>
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
 	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="etc.dir" value="${basedir}/etc" />
+	
 
 <!-- _______________________________________________________________________________________ -->
 	
-	<!-- Definitions of classpath variants used for different tasks -->
-	<path id="compile.classpath">
-		<fileset dir="lib">
-			<include name="*.jar"/>
-		</fileset>
-	</path>
-	
 	<path id="POS.classpath">
+		
 		<pathelement location="${build.classes.dir}"/>
+		<pathelement location="${etc.dir}"/>
+		<pathelement location="${img.dir}"/>
 		<fileset dir="${lib.dir}">
 	        <include name="**/*.jar"/>
 	    </fileset>
+
 	</path>	
 	
 <!-- ______________________________________RUNC______________________________________________ -->
@@ -44,15 +42,10 @@
 	<!-- Käivita programm -->
 	<target name="run" depends="build" description="Run POS application">
 		
-		<!-- Kopeeri logo build kausta -->
-		<copy todir="${build.classes.dir}">
-		    <fileset dir="${img.dir}"/>
-		</copy>
-		
 		<!-- Käivita .class kompileeritud programm -->
 		<java classname="ee.ut.math.tvt.a.Intro" classpathref="POS.classpath" fork="yes">
 			<jvmarg value="-Xdebug" />
-			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=64053" />
 		</java>
 	</target>
 	
@@ -86,11 +79,6 @@
 	<!-- Käivita loodud jar fail -->
 	<target name="jrun" depends="dist" description="builds and runs distributable jar file">
 		
-		<!-- Kopeeri application.properties fail dist kausta -->
-		<copy todir="${dist.dir}">
-			<fileset file="application.properties"/>
-		</copy>
-		
 		<!-- Käivita loodud jar executable fail -->
 		<java jar="${dist.dir}/A.jar" fork="yes" />
 	</target>
@@ -98,27 +86,8 @@
 <!-- ______________________________________DIST_____________________________________________ -->	
 
 	<!-- Loo kompileeritud failidest jar fail -->
-	<target name="dist" depends="clean, version" description="Generates jar file">
-		
-		<!-- Loo kaustad .class failide loomiseks -->
-		<mkdir dir="${build.dir}"/>
-		<mkdir dir="${build.classes.dir}"/>
-		
-		<!-- Kompileeri -->
-		<javac
-            srcdir="${src.dir}"
-            destdir="${build.classes.dir}"
-			classpathref="POS.classpath"
-			debug="true"
-            debuglevel="lines,vars,source"
-            encoding="utf-8"
-            compiler="modern"
-            target="1.8"
-            source="1.8"
-			includeantruntime="false">
-			<classpath refid="compile.classpath"/>
-		</javac>
-		
+	<target name="dist" depends="build, version" description="Generates jar file">
+				
 		<!-- Loo dist kaust jar ja teistele lisafailidele -->
 		<mkdir dir="${dist.dir}"/>
 		
@@ -126,6 +95,7 @@
 		<jar destfile="${dist.dir}/A.jar">
 		    <fileset dir="${build.classes.dir}"/>
 		 	<fileset dir="${img.dir}"/>
+			<fileset dir="${etc.dir}"/>
 			
 			<!-- Kopeeri kogu lib kaustas olevate jar failide sisu lõppfaili A.jar -->
 			<restrict>
@@ -150,19 +120,17 @@
 	<!-- Kirjuta IntroUI.java faili uuendatud versiooni informatsioon -->
 	<target name="version" description="Increments version information and add to the source code">
 		
-		<propertyfile file="version.properties">
+		<propertyfile file="${etc.dir}/version.properties">
 		<entry key="build.revision.number" type="int" operation="+" value="1"/>
 		</propertyfile>
-		<property file="version.properties"/>
-		<propertyfile file="version.properties">
+		<property file="${etc.dir}/version.properties"/>
+		<propertyfile file="${etc.dir}/version.properties">
 			<entry key="build.number" value="${build.major.number}"/>
 			<entry key="build.number" operation="+" value="."/>
 			<entry key="build.number" operation="+" value="${build.minor.number}"/>
 			<entry key="build.number" operation="+" value="."/>
 			<entry key="build.number" operation="+" value="${build.revision.number}"/>
 		</propertyfile>
-		<replaceregexp file="${src.dir}/ee/ut/math/tvt/a/IntroUI.java" match="@\(#\).*@" 
-			replace="@(#)${build.major.number}.${build.minor.number}.${build.revision.number})@" />
 	
 	</target>
 

@@ -4,12 +4,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
+
 import java.awt.Toolkit;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class IntroUI {
@@ -41,8 +43,9 @@ public class IntroUI {
 		
 		// Laeb propsid app.props failist.
 		Properties props = new Properties();
-		FileInputStream fis = new FileInputStream("application.properties");
+		InputStream fis = Intro.class.getResourceAsStream("/application.properties");
 		props.load(fis);
+		fis.close();
 		
 		JLabel lblProjektiJuht = new JLabel(props.getProperty("projekt.juht")+", " + props.getProperty("projekt.juht.meil"));
 		lblProjektiJuht.setBounds(23, 49, 220, 16);
@@ -71,9 +74,12 @@ public class IntroUI {
 		lblLogo.setBounds(320, 140, 129, 96);
 		frame.getContentPane().add(lblLogo);
 		
-		final String  versionNr = "@(#)0.2.39)@";
-		String versionSub = versionNr.substring(4, versionNr.length()-2);
-		JLabel lblNewLabelVersion = new JLabel("Versioon: " + versionSub);
+		Properties verProps = new Properties();
+		InputStream ver = Intro.class.getResourceAsStream("/version.properties");
+		verProps.load(ver);
+		ver.close();
+		
+		JLabel lblNewLabelVersion = new JLabel("Versioon: " + verProps.getProperty("build.number"));
 		lblNewLabelVersion.setBounds(320, 240, 200, 14);
 		frame.getContentPane().add(lblNewLabelVersion);
 	}

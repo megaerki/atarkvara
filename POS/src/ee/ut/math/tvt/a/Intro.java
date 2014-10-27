@@ -18,7 +18,7 @@ public class Intro {
 	private static final String MODE = "console";
 	
 	public static void main(String[] args) throws IOException {
-		PropertyConfigurator.configure("application.properties");
+		PropertyConfigurator.configure(Intro.class.getResourceAsStream("/application.properties"));
 		
 		final SalesDomainController domainController = new SalesDomainControllerImpl();
 		
@@ -26,8 +26,11 @@ public class Intro {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e){
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		}
+		
+		String tere = new String();
+		tere.length();
 		
 		if (args.length == 1 && args[0].equals(MODE)) {
 			log.debug("Mode: " + MODE);
