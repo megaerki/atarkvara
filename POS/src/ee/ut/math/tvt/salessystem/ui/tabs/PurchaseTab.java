@@ -273,8 +273,10 @@ private void getBoolean(){
 		    	
 		    	
 		    	double sum = PurchaseItemPanel.getSum();
-		    	chanMoney=String.valueOf(sum-changeMoney);
+		    	
+		    	chanMoney=String.valueOf(Math.round((sum-changeMoney)*100.0)/100.0);
 		    	String chanMoney2= chanMoney.replaceAll("-","");
+		    	
 		    	if(sum>changeMoney){
 		    		cha1.setText("Payment to small");
 		    	}
