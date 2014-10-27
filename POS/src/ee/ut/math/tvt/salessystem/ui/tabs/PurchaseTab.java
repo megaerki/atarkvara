@@ -148,6 +148,7 @@ private void getBoolean(){
     b.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         cancelPurchaseButtonClicked();
+        
       }
     });
     b.setEnabled(false);
@@ -179,12 +180,14 @@ private void getBoolean(){
   /**  Event handler for the <code>cancel purchase</code> event. */
   protected void cancelPurchaseButtonClicked() {
     log.info("Sale cancelled");
+    
     try {
       domainController.cancelCurrentPurchase();
       endSale();
       model.getCurrentPurchaseTableModel().clear();
     } catch (VerificationFailedException e1) {
       log.error(e1.getMessage());
+      
     }
   }
 

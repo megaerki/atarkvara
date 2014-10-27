@@ -60,7 +60,7 @@ public class PurchaseItemPanel extends JPanel {
     
     // Warehouse model
     private SalesSystemModel model;
-    private static double sum;
+    public static double sum;
 
     /**
      * Constructs new purchase item panel.
@@ -193,11 +193,17 @@ public class PurchaseItemPanel extends JPanel {
     public static boolean getBoolean(){
     	return addCart;
     }
-    private void setBoolean(){
+    private void setBooleanTrue(){
     	addCart=true;
+    }
+    private void setBooleanFalse(){
+    	addCart=false;
     }
     public static double getSum(){
 	 return sum;
+    }
+    public static void setSum(double price,int quantity){
+    	sum=sum+(price*quantity);
     }
     // Fill dialog with data from the "database".
     private void fillDialogFields() {
@@ -208,9 +214,7 @@ public class PurchaseItemPanel extends JPanel {
     	
     	if (stockItem != null) {
             //nameField.setText(stockItem.getName());
-    		stockItem.setSum(stockItem.getPrice());
-    		double price = stockItem.getSum();
-    		sum=price;
+
             String priceString = String.valueOf(stockItem.getPrice());
             priceField.setText(priceString);
             String barCodeString = String.valueOf(stockItem.getId());
@@ -237,10 +241,18 @@ public class PurchaseItemPanel extends JPanel {
      * Add new item to the cart.
      */
     public void addItemEventHandler()  {
-    	setBoolean();
+    	setBooleanTrue();
+    	
     	
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
+		
+		double price = stockItem.getPrice();
+		int quantity1=Integer.parseInt(quantityField.getText());
+
+		setSum(price,quantity1);
+		
+		
         if (stockItem != null) {
             int quantity;
           
@@ -288,6 +300,9 @@ public class PurchaseItemPanel extends JPanel {
      * Reset dialog fields.
      */
     public void reset() {
+    	setBooleanFalse();
+    	sum=0;
+    	
     	((DefaultComboBoxModel<StockItem>)itemSelector.getModel()).removeAllElements();
     		for(StockItem stockItem : model.getWarehouseTableModel().getTableRows()) {
     			((DefaultComboBoxModel<StockItem>)itemSelector.getModel()).addElement(stockItem);
