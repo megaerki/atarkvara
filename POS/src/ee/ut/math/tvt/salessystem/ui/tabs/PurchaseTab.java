@@ -262,24 +262,35 @@ private void getBoolean(){
 		}
 		
 		    public void money(){
-		    	if(pay1.getText().equals("")){
+		    	try{
+		    	if(pay1.getText().equals("") || pay1.getText().contains("[a-zA-Z.]+") ){
+		    		
 		    	}
 		    	else{
 		    	changeMoney=Double.parseDouble(pay1.getText());
-		    	 
+		    	}
+		    	
+		    	
 		    	double sum = PurchaseItemPanel.getSum();
 		    	chanMoney=String.valueOf(sum-changeMoney);
 		    	String chanMoney2= chanMoney.replaceAll("-","");
 		    	if(sum>changeMoney){
 		    		cha1.setText("Payment to small");
 		    	}
+		    	
 		    	else{
 		    	cha1.setText(chanMoney2);
 		    	}
 		    	}
 		    	
-		    }
-	 });
+		   
+		    
+		    
+		    catch(NumberFormatException ex){
+				
+			}
+	 
+		    } });
   }
   
 
