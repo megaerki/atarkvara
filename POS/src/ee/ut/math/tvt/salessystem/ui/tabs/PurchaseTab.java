@@ -21,6 +21,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -287,13 +288,17 @@ private void getBoolean(){
 		    
 		    
 		    catch(NumberFormatException ex){
+				WrongInput();
 				
-			}
+				}
 	 
 		    } });
   }
   
-
+  private void WrongInput() {
+  	JOptionPane.showMessageDialog(null, "Please enter a positive number for payment amount.", "Attention", JOptionPane.WARNING_MESSAGE);
+  	log.debug("User did not enter a valid number as a payment amount");
+  }
   
   
   /** Event handler for the <code>submit purchase</code> event. */
