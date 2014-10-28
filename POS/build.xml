@@ -20,6 +20,7 @@
 		<pathelement location="${build.classes.dir}"/>
 		<pathelement location="${etc.dir}"/>
 		<pathelement location="${img.dir}"/>
+		
 		<fileset dir="${lib.dir}">
 	        <include name="**/*.jar"/>
 	    </fileset>
@@ -47,6 +48,7 @@
 			<jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=64053" />
 		</java>
+		
 	</target>
 	
 <!-- _____________________________________BUILD_____________________________________________ -->
@@ -72,6 +74,7 @@
 			includeantruntime="false">
 			<classpath refid="POS.classpath"/>
 		</javac>
+		
 	</target> 
 
 <!-- ______________________________________JRUN_____________________________________________ -->
@@ -81,6 +84,7 @@
 		
 		<!-- Käivita loodud jar executable fail -->
 		<java jar="${dist.dir}/A.jar" fork="yes" />
+		
 	</target>
 	
 <!-- ______________________________________DIST_____________________________________________ -->	
@@ -93,6 +97,7 @@
 		
 		<!-- Loo jar executable -->
 		<jar destfile="${dist.dir}/A.jar">
+			
 		    <fileset dir="${build.classes.dir}"/>
 		 	<fileset dir="${img.dir}"/>
 			<fileset dir="${etc.dir}"/>
@@ -111,6 +116,7 @@
 	 	    <manifest>
 	        	<attribute name="Main-Class" value="ee.ut.math.tvt.a.Intro"/>
 	        </manifest>
+			
 		</jar>
 		
 	</target>
@@ -121,9 +127,12 @@
 	<target name="version" description="Increments version information and add to the source code">
 		
 		<propertyfile file="${etc.dir}/version.properties">
+			
 		<entry key="build.revision.number" type="int" operation="+" value="1"/>
 		</propertyfile>
+		
 		<property file="${etc.dir}/version.properties"/>
+		
 		<propertyfile file="${etc.dir}/version.properties">
 			<entry key="build.number" value="${build.major.number}"/>
 			<entry key="build.number" operation="+" value="."/>
@@ -135,9 +144,11 @@
 	</target>
 
 <!-- _______________________________Build internal documentation___________________________ -->
+	
 	<target name="javadoc" description="Build internal documentation">
 		
 		<mkdir dir="${doc.dir}"/>
+		
 		<javadoc destdir="${doc.dir}" classpathref="compile.classpath">
 			<fileset dir="${src.dir}" includes="**/*.java"/>
 		</javadoc>
@@ -150,12 +161,12 @@
 	<target name="clean" description="Clean up build system results">
 		
 		<delete dir="${build.dir}"/>
-		<delete dir="${dist.dir}"/>
 		
 	</target>
 
 <!-- _____________________________________GIT GET INFO_______________________________________ -->
 
+	<!-- Küsi kasutajalt informatsiooni git kasutamiseks -->
 	<target name="git_info" description="Commit and push changes to github">
 		
 		<input
@@ -164,19 +175,20 @@
 		  />
 
 		<input
-			    message="Sisesta parool: "
-			    addproperty="PASSWORD"
-			  />
+		    message="Sisesta parool: "
+		    addproperty="PASSWORD"
+		  />
+		
 		<input
-			    message="Sisesta kommentaar: "
-			    addproperty="COMMENT"
-			  />
+		    message="Sisesta kommentaar: "
+		    addproperty="COMMENT"
+		  />
 		
 	</target>
 
 <!-- _____________________________________GIT COMMIT________________________________________ -->
 		
-	
+	<!-- Commiti muudatused ja pushi GitHubi (megaerki/atarkvara). Kasutab ant.bat skripti selleks. -->
 	<target name="git_commit" depends="git_info" description="Commit and psuh to github">
 		
 		<exec dir="${basedir}" executable="ant.bat">
@@ -187,19 +199,22 @@
 		
 <!-- _____________________________________GIT TAG___________________________________________ -->
 			
+	<!-- Lisa tag kujul homework_[ncount] ja pushi GitHubi -->
 	<target name="git_tag" depends="git_info" description="Create a tag and push">
 		
 		<input
-			    message="Sisesta kodutöö number: "
-			    addproperty="n_count"
+		    message="Sisesta kodutöö number: "
+		    addproperty="n_count"
 		/>
 		
 		<exec dir="${basedir}" executable="cmd.exe">
 		  	<arg line="/c git tag -a homework_${n_count} -m '${COMMENT}'"/>
 		</exec>
+		
 		<exec dir="${basedir}" executable="cmd.exe">
 			<arg line="/c git push --tags https://${USERNAME}:${PASSWORD}@github.com/megaerki/atarkvara.git"/>
 		</exec>
+		
 	</target>
 		
 </project>
