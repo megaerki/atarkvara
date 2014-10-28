@@ -13,7 +13,7 @@ import javax.swing.table.JTableHeader;
 
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.tabs.HistoryItemDetailsTab;
+ 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
  * labelled "History" in the menu).
@@ -50,21 +50,9 @@ public class HistoryTab {
     }
     private Component drawHistoryMainPane() {
         JPanel panel = new JPanel();
-
+        System.out.println(model);
         final JTable table = new JTable(model.getHistoryTableModel());
         
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                long row = table.rowAtPoint(evt.getPoint());
-                if (row >= 0 ) {
-                	HistoryItem HI=model.getHistoryTableModel().getItemById(row);
-                	HistoryItemDetailsTab newWin= new HistoryItemDetailsTab(model,HI);
-        	        newWin.setVisible(true);
-
-                }
-            }
-        });
         
         JTableHeader header = table.getTableHeader();
         header.setReorderingAllowed(false);
@@ -80,7 +68,7 @@ public class HistoryTab {
         panel.setLayout(gb);
         panel.add(scrollPane, gc);
 
-        panel.setBorder(BorderFactory.createTitledBorder("Purchase history"));
+        panel.setBorder(BorderFactory.createTitledBorder("History of sales"));
         return panel;
       }
 }

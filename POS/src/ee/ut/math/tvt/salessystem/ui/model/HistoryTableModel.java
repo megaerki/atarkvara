@@ -18,7 +18,7 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
 	
 	public HistoryTableModel() {
-		super(new String[] {"Id","Date", "Time", "Bill"});
+		super(new String[] {"Id","Date", "Time", "Sum"});
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 		case 3:
 			return item.getSum();
 		}
-		throw new IllegalArgumentException("Column index out of range");
+		throw new IllegalArgumentException("Column index error");
 	}
 	 public void addItem(final HistoryItem historyIt) {
 		 rows.add(historyIt);

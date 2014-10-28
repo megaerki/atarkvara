@@ -131,7 +131,7 @@ private void getBoolean(){
     JButton b = new JButton("Confirm");
     b.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        submitPurchaseButtonClicked();
+        //submitPurchaseButtonClicked();
         getBoolean();
         if (addCart){ confirmOrder();}
         
@@ -306,15 +306,16 @@ private void getBoolean(){
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
     log.info("Sale complete");
-    try {
+    //try {
       log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
+      //domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
       domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
       endSale();   
+      //System.out.println(model.getHistoryTableModel().getRowCount());
       model.getCurrentPurchaseTableModel().clear();
-    } catch (VerificationFailedException e1) {
-      log.error(e1.getMessage());
-    }
+    //} catch (VerificationFailedException e1) {
+    //  log.error(e1.getMessage());
+    //}
   }
 
 
