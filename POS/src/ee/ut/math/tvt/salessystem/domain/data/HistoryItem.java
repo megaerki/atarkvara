@@ -88,16 +88,16 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 
 
 	public void setstockI(StockItem stockI) {
-		stockI = stockI;
+		this.stockI = stockI;
 	}
 
 	public double totalSum(){
-		sum=0;
-		StockItem stocki;
+		double sum=0;
+		SoldItem stocki;
 		
 		for(int i=0;i<soldItems.size();i++){
-			stocki= soldItems.get(i).getStockItem();
-			sum+=stocki.getPrice();
+			stocki= soldItems.get(i);
+			sum+=stocki.getSum();
 		}
 		return sum;
 	}
