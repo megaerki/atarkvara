@@ -131,7 +131,7 @@ private void getBoolean(){
     JButton b = new JButton("Confirm");
     b.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        submitPurchaseButtonClicked();
+        //submitPurchaseButtonClicked();
         getBoolean();
         if (addCart){ confirmOrder();}
         
@@ -239,11 +239,19 @@ private void getBoolean(){
 	  acc.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {     		
         	//saves order on click
-              
-              
-              
+        	if (isDouble(cha1.getText())){
+        		submitPurchaseButtonClicked();
+            	confirm.setVisible(false);
+        	}
+        	else{
+        		JOptionPane.showMessageDialog(null, "Payment amount too small to pay the pill!", "Attention", JOptionPane.WARNING_MESSAGE);
+        	  	log.debug("Not enough funds to pay the pill");
+        	}
+        	              
           }
       });
+	  
+
 	  
 	 pay1.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -297,6 +305,15 @@ private void getBoolean(){
 		    } });
   }
   
+  public static boolean isDouble(String s){
+		try{
+			Double.parseDouble(s);
+		}catch(NumberFormatException e){
+			return false;
+		}
+		return true;
+  }
+  
   private void WrongInput() {
   	JOptionPane.showMessageDialog(null, "Please enter a positive number for payment amount.", "Attention", JOptionPane.WARNING_MESSAGE);
   	log.debug("User did not enter a valid number as a payment amount");
@@ -306,16 +323,16 @@ private void getBoolean(){
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
     log.info("Sale complete");
-    try {
+    //try {
       log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      domainController.submitCurrentPurchase(
-          model.getCurrentPurchaseTableModel().getTableRows()
-      );
-      endSale();
+      //domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
+      domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
+      endSale();   
+      //System.out.println(model.getHistoryTableModel().getRowCount());
       model.getCurrentPurchaseTableModel().clear();
-    } catch (VerificationFailedException e1) {
-      log.error(e1.getMessage());
-    }
+    //} catch (VerificationFailedException e1) {
+    //  log.error(e1.getMessage());
+    //}
   }
 
 

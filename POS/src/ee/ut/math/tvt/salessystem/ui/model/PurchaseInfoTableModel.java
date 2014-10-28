@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.ui.model;
 
 import org.apache.log4j.Logger;
 
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 
 /**
@@ -66,4 +67,9 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
         fireTableDataChanged();
     }
+
+	public void addItem(HistoryItem newElem) {
+		// TODO Auto-generated method stub
+		
+	}
 }
