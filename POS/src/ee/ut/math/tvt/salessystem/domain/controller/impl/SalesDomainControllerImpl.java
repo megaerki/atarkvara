@@ -34,12 +34,10 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		model.getHistoryTableModel().addItem(newElem);
 		 
 	}
-
 	
 	public void cancelCurrentPurchase() throws VerificationFailedException {				
 		// XXX - Cancel current purchase
 	}
-	
 
 	public void startNewPurchase() throws VerificationFailedException {
 		// XXX - Start new purchase
@@ -74,7 +72,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		
 		HistoryItem newElem= new HistoryItem(listsold, "Jan 01 2011","11:11:11",(long) 0);
 		historydataset.add(newElem);
-		System.out.println(historydataset);
 		return historydataset;
 	}
 
@@ -83,8 +80,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
- 
 
 	@Override
 	public List<SoldItem> loadDetailedHistoryState() {
@@ -101,7 +96,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		HistoryItem newElem= new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), parts[1]+" "+parts[2]+" "+parts[5], parts[3],id);
 		historydataset.add(newElem);
 		model.getHistoryTableModel().addItem(newElem);
-		
 		
 	}
 	public List<HistoryItem> getHistorydataset() {

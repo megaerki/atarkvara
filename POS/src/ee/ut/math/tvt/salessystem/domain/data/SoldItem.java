@@ -9,7 +9,6 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
     private Long id;
     private StockItem stockItem;
-    
     private String name;
     private  Integer quantity;
     private  double price;
