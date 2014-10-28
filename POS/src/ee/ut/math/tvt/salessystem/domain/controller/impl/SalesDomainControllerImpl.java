@@ -98,12 +98,5 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		model.getHistoryTableModel().addItem(newElem);
 		
 	}
-	public List<HistoryItem> getHistorydataset() {
-		return historydataset;
-	}
-
-	public void setHistorydataset(List<HistoryItem> historydataset) {
-		this.historydataset = historydataset;
-	}
 
 }

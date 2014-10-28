@@ -18,34 +18,22 @@ public class SoldItem implements Cloneable, DisplayableItem {
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
+        this.id = stockItem.getId();
         
     }
     
-    
     public Long getId() {
         return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
     }
     
     public String getName() {
         return name;
     }
     
-    public void setName(String name) {
-        this.name = name;
-    }
-    
     public double getPrice() {
         return price;
     }
-    
-    public void setPrice(double price) {
-        this.price = price;
-    }
-    
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -60,10 +48,6 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
     public StockItem getStockItem() {
         return stockItem;
-    }
-
-    public void setStockItem(StockItem stockItem) {
-        this.stockItem = stockItem;
     }
     
 }

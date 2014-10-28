@@ -7,27 +7,20 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 
-import javax.accessibility.AccessibleContext;
 import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseHistoryTableModel;
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  
 /**
@@ -88,7 +81,8 @@ public class HistoryTab {
         panel.setBorder(BorderFactory.createTitledBorder("History of sales"));
         
         table.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent event){
+        	@Override
+			public void mouseClicked(MouseEvent event){
         		int rowNr = table.getSelectedRow();
         		mouseClickedActionHandler(rowNr);
         	}
@@ -102,6 +96,8 @@ public class HistoryTab {
 		HistoryItem b = historyList.get(rowNr);
 		PurchaseHistoryTableModel history = new PurchaseHistoryTableModel();
 		history.populateWithData(b.getSoldItems());
+		
+		log.info("History tab row " + rowNr + " opened");
 		
 		JFrame frame = new JFrame("Selected Purchase");
 		JTable table = new JTable (history);

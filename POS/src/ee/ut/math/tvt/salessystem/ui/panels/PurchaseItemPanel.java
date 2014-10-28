@@ -1,28 +1,20 @@
 package ee.ut.math.tvt.salessystem.ui.panels;
 
-import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -180,8 +172,6 @@ public class PurchaseItemPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {     		
                 addItemEventHandler();
                 
-                
-                
             }
         });
 
@@ -210,7 +200,6 @@ public class PurchaseItemPanel extends JPanel {
         //StockItem stockItem = getStockItemByBarcode();
     	StockItem stockItem = (StockItem)
     	itemSelector.getSelectedItem();
-    	
     	
     	if (stockItem != null) {
             //nameField.setText(stockItem.getName());
@@ -242,7 +231,6 @@ public class PurchaseItemPanel extends JPanel {
      */
     public void addItemEventHandler()  {
     	setBooleanTrue();
-    	
     	
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
@@ -292,10 +280,6 @@ public class PurchaseItemPanel extends JPanel {
     	logger.debug("User did not enter a valid number as a amount");
     }
     
-
-    /**
-     * Sets whether or not this component is enabled.
-     */
     @Override
     public void setEnabled(boolean enabled) {
     	this.addItemButton.setEnabled(enabled);
@@ -306,9 +290,6 @@ public class PurchaseItemPanel extends JPanel {
         fillDialogFields();
     }
 
-    /**
-     * Reset dialog fields.
-     */
     public void reset() {
     	setBooleanFalse();
     	sum=0;

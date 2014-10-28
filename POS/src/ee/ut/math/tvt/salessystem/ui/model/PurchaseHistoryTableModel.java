@@ -1,8 +1,5 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
-import org.apache.log4j.Logger;
-
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 
 /**
@@ -11,7 +8,7 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 public class PurchaseHistoryTableModel extends SalesSystemTableModel<SoldItem> {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(PurchaseHistoryTableModel.class);
+//	private static final Logger log = Logger.getLogger(PurchaseHistoryTableModel.class);
 	
 	public PurchaseHistoryTableModel() {
 		super(new String[] { "Id", "Name", "Price", "Quantity","Sum"});

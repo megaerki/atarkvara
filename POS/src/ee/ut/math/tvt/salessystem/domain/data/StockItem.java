@@ -17,8 +17,6 @@ public class StockItem implements Cloneable, DisplayableItem {
     
     private double sum;
     
-   
-
     /**
      * Constucts new <code>StockItem</code> with the specified values.
      * @param id barcode id

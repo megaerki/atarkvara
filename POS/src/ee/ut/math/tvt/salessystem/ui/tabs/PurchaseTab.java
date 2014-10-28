@@ -1,15 +1,12 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -17,13 +14,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -112,7 +109,8 @@ public class PurchaseTab {
   private JButton createNewPurchaseButton() {
     JButton b = new JButton("New purchase");
     b.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+      @Override
+	public void actionPerformed(ActionEvent e) {
         newPurchaseButtonClicked();
       }
     });
@@ -130,7 +128,8 @@ private void getBoolean(){
   private JButton createConfirmButton() {
     JButton b = new JButton("Confirm");
     b.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+      @Override
+	public void actionPerformed(ActionEvent e) {
         //submitPurchaseButtonClicked();
         getBoolean();
         if (addCart){ confirmOrder();}
@@ -147,7 +146,8 @@ private void getBoolean(){
   private JButton createCancelButton() {
     JButton b = new JButton("Cancel");
     b.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+      @Override
+	public void actionPerformed(ActionEvent e) {
         cancelPurchaseButtonClicked();
         
       }
@@ -196,7 +196,7 @@ private void getBoolean(){
   public void confirmOrder(){
 
 	  final JFrame confirm = new JFrame("Confirm sale");
-	  confirm.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	  confirm.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 	  //confirm.getContentPane().add(emptyLabel, BorderLayout.CENTER);
 	  JPanel panel = new JPanel();
 	  panel.setLayout(new GridLayout(4, 3));
@@ -229,7 +229,8 @@ private void getBoolean(){
 	  
 	  
 	  can.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {     		
+          @Override
+		public void actionPerformed(ActionEvent e) {     		
         	confirm.setVisible(false);
               
               
@@ -237,7 +238,8 @@ private void getBoolean(){
           }
       });
 	  acc.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {     		
+          @Override
+		public void actionPerformed(ActionEvent e) {     		
         	//saves order on click
         	if (isDouble(cha1.getText())){
         		submitPurchaseButtonClicked();
@@ -255,16 +257,19 @@ private void getBoolean(){
 	  
 	 pay1.getDocument().addDocumentListener(new DocumentListener() {
 
+		@Override
 		public void changedUpdate(DocumentEvent arg0) {
 			money();
 			
 		}
 
+		@Override
 		public void insertUpdate(DocumentEvent arg0) {
 			money();
 			
 		}
 
+		@Override
 		public void removeUpdate(DocumentEvent arg0) {
 			money();
 			
