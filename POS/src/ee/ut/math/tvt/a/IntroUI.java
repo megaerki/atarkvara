@@ -33,7 +33,6 @@ public class IntroUI {
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IntroUI.class.getResource("/logo.jpg")));
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblProjektiJuhtLabel = new JLabel("Projektijuht");

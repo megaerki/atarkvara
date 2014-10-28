@@ -24,9 +24,6 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 		this.sum=totalSum();
 	}
 
-
-
-
 	public double getPrice() {
 		return price;
 	}

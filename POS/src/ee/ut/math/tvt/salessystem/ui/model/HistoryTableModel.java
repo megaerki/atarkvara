@@ -39,6 +39,7 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 		 rows.add(historyIt);
 		 fireTableDataChanged();
 	 }
+ 
 }
 
 

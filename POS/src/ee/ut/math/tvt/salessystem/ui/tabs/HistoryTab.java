@@ -1,17 +1,33 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.List;
 
+import javax.accessibility.AccessibleContext;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 
+import org.apache.log4j.Logger;
+
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseHistoryTableModel;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  
 /**
@@ -19,6 +35,8 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  * labelled "History" in the menu).
  */
 public class HistoryTab {
+	
+	private static final Logger log = Logger.getLogger(HistoryTab.class);
     
 	 private SalesSystemModel model;
 
@@ -50,7 +68,6 @@ public class HistoryTab {
     }
     private Component drawHistoryMainPane() {
         JPanel panel = new JPanel();
-        System.out.println(model);
         final JTable table = new JTable(model.getHistoryTableModel());
         
         
@@ -69,6 +86,29 @@ public class HistoryTab {
         panel.add(scrollPane, gc);
 
         panel.setBorder(BorderFactory.createTitledBorder("History of sales"));
+        
+        table.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent event){
+        		int rowNr = table.getSelectedRow();
+        		mouseClickedActionHandler(rowNr);
+        	}
+		});
+        
         return panel;
       }
+    
+    protected void mouseClickedActionHandler(int rowNr){
+		List<HistoryItem> historyList = SalesDomainControllerImpl.historydataset;
+		HistoryItem b = historyList.get(rowNr);
+		PurchaseHistoryTableModel history = new PurchaseHistoryTableModel();
+		history.populateWithData(b.getSoldItems());
+		
+		JFrame frame = new JFrame("Selected Purchase");
+		JTable table = new JTable (history);
+		frame.getContentPane().add(table, BorderLayout.CENTER);
+		frame.pack();
+		frame.setVisible(true);
+    }
+    
 }
+

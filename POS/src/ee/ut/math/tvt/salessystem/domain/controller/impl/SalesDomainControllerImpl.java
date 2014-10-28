@@ -16,7 +16,7 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
 	static List<StockItem> dataset = new ArrayList<StockItem>();
-	static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
+	public static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
 	
 	public void submitCurrentPurchase(List<SoldItem> goods) throws VerificationFailedException {
 		// Let's assume we have checked and found out that the buyer is underaged and
@@ -24,9 +24,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		//  throw new VerificationFailedException("Underaged!");
 		// XXX - Save purchase
 		
-	 
-	
-		 
 	}
 
 	public void submitHistory(List<SoldItem> goods, SalesSystemModel model) {
@@ -102,6 +99,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	    String[] parts = date.toString().split(" ");
 	    Long id= (long) historydataset.size();
 		HistoryItem newElem= new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), parts[1]+" "+parts[2]+" "+parts[5], parts[3],id);
+		historydataset.add(newElem);
 		model.getHistoryTableModel().addItem(newElem);
 		
 		

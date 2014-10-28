@@ -49,6 +49,5 @@ public class SalesSystemModel {
 	public HistoryTableModel getHistoryTableModel() {
 		return historyTableModel;
 	}
-
 	 
 }
