@@ -54,6 +54,8 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		fireTableDataChanged();
 	}
 
+	 
+	
 	@Override
 	public String toString() {
 		final StringBuffer buffer = new StringBuffer();

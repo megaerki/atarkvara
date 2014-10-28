@@ -239,7 +239,7 @@ private void getBoolean(){
 	  acc.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {     		
         	//saves order on click
-              
+        	submitPurchaseButtonClicked();
               
               
           }
@@ -308,10 +308,9 @@ private void getBoolean(){
     log.info("Sale complete");
     try {
       log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      domainController.submitCurrentPurchase(
-          model.getCurrentPurchaseTableModel().getTableRows()
-      );
-      endSale();
+      domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
+      domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
+      endSale();   
       model.getCurrentPurchaseTableModel().clear();
     } catch (VerificationFailedException e1) {
       log.error(e1.getMessage());
