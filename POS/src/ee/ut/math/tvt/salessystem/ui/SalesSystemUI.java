@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -27,7 +28,7 @@ public class SalesSystemUI extends JFrame {
 
   private static final Logger log = Logger.getLogger(SalesSystemUI.class);
 
-  //private final SalesDomainController domainController;
+  public SalesDomainController dc;
 
   // Warehouse model
   private SalesSystemModel model;
@@ -41,7 +42,9 @@ public class SalesSystemUI extends JFrame {
    * Constructs sales system GUI.
    * @param domainController Sales domain controller.
    */
+  
   public SalesSystemUI(SalesDomainController domainController) {
+	  
     //this.domainController = domainController;
     this.model = new SalesSystemModel(domainController);
 
@@ -67,14 +70,28 @@ public class SalesSystemUI extends JFrame {
     setSize(width, height);
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     setLocation((screen.width - width) / 2, (screen.height - height) / 2);
-
+    
+    
+    
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
+    	try{
+    	dc.endSession();
+    	}
+    	catch(NullPointerException ex){
+    		
+    	}
         System.exit(0);
       }
     });
+  
   }
+  
+
+
+  
+  
 
   private void drawWidgets() {
     JTabbedPane tabbedPane = new JTabbedPane();
