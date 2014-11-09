@@ -1,6 +1,9 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.List;
+
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
  
 public class SalesSystemModel {
     
@@ -24,12 +27,16 @@ public class SalesSystemModel {
         
         warehouseTableModel = new StockTableModel();
         currentPurchaseTableModel = new PurchaseInfoTableModel();
-         historyTableModel= new HistoryTableModel();
+        historyTableModel= new HistoryTableModel();
         // populate stock model with data from the warehouse
-        warehouseTableModel.populateWithData(domainController.loadWarehouseState());
-        historyTableModel.populateWithData(domainController.loadHistoryState());
+        //warehouseTableModel.populateWithData(domainController.loadWarehouseState());
+        regetWarehouseTableModel();
+      
+        //historyTableModel.populateWithData(domainController.loadHistoryState());
+        historyTableModel.populateWithData(domainController.getAllHistoryItems());
     }
 
+    
     public StockTableModel getWarehouseTableModel() {
         return warehouseTableModel;
     }
@@ -45,5 +52,8 @@ public class SalesSystemModel {
 	public SalesDomainController getDomainController() {
 		return domainController;
 	}
-	 
+	public void regetWarehouseTableModel() {
+        List<StockItem> stockItems = domainController.getAllStockItems();
+        warehouseTableModel.populateWithData(stockItems);
+}
 }

@@ -20,9 +20,11 @@ public interface SalesDomainController {
      * @return List of ${link
      *         ee.ut.math.tvt.salessystem.domain.data.StockItem}s.
      */
-    public List<StockItem> loadWarehouseState();
+    //public List<StockItem> loadWarehouseState();
+	public List<StockItem> getAllStockItems();
     public List<HistoryItem> loadDetailedDeatailHistoryState();
-    public List<HistoryItem> loadHistoryState();
+    //public List<HistoryItem> loadHistoryState();
+    public List<HistoryItem> getAllHistoryItems();
     public List<SoldItem> loadDetailedHistoryState();
     // business processes
     /**
@@ -44,6 +46,7 @@ public interface SalesDomainController {
      * 
      * @param goods
      *            Goods that the buyer has chosen to buy.
+     * @return 
      * @throws VerificationFailedException
      */
     public void submitCurrentPurchase(List<SoldItem> goods)
@@ -55,5 +58,6 @@ public interface SalesDomainController {
 	public void endSession();
 
 	public Session getSession();
+	public void setModel(SalesSystemModel model);
     
 }

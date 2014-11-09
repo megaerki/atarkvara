@@ -1,10 +1,13 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,16 +24,20 @@ public class StockItem implements Cloneable, DisplayableItem {
     @Column(name = "name")
     private String name;
     
-    @Column(name = "price")
+    @Column(name = "Price")
     private double price;
     
-    @Column(name = "description")
+    @Column(name = "Description")
     private String description;
     
-    @Column(name = "quantity")
+    @Column(name = "Quantity")
     private int quantity;
     
-    private double sum;
+    //private double sum;
+    
+   // @OneToMany(mappedBy = "stockItem")
+   // private Set<SoldItem> soldItem;
+ 
     
     /**
      * Constucts new <code>StockItem</code> with the specified values.
@@ -97,13 +104,13 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.quantity = quantity;
     }
     
-    public double getSum() {
-        return sum;
-    }
+    //public double getSum() {
+    //    return sum;
+    //}
 
-    public void setSum(double price) {
-        this.sum = price;
-    }
+    //public void setSum(double price) {
+    //    this.sum = price;
+    //}
 	
 	
 		

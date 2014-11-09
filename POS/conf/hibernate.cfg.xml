@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
 
@@ -12,21 +12,17 @@
 		<property name="connection.url">jdbc:hsqldb:hsql://localhost/POS</property>
 		<property name="connection.username">sa</property>
 		<property name="connection.password"></property>
-
 		<!-- JDBC connection pool (use the built-in) -->
-		<property name="connection.pool_size">1</property>
-
+		<property name="connection.pool_size">5</property>
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.HSQLDialect</property>
-
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
-
-		<mapping package="ee.ut.math.tvt.salessystem.domain.data" />
-
-		<mapping class="ee.ut.math.tvt.salessystem.domain.data.SoldItem" />
-		<mapping class="ee.ut.math.tvt.salessystem.domain.data.StockItem" /><mapping
-			class="ee.ut.math.tvt.salessystem.domain.data.HistoryItem" ></mapping>
+		<mapping package="ee.ut.math.tvt.salessystem.domain.data"/>
+		<mapping class="ee.ut.math.tvt.salessystem.domain.data.SoldItem"/>
+		<mapping class="ee.ut.math.tvt.salessystem.domain.data.StockItem"/>
+		<mapping class="ee.ut.math.tvt.salessystem.domain.data.HistoryItem"></mapping>
+		 
 
 	</session-factory>
 

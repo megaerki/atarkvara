@@ -1,17 +1,45 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
-
+@Entity
+@Table(name = "HISTORYITEM")
 public class HistoryItem implements Cloneable, DisplayableItem {
-    private List<SoldItem> soldItems;
+	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+	
+	@Column(name = "sale_date")
 	private String date;
+	
+	@Column(name = "sale_time")
 	private String time;
+	
+	@Column(name = "cost")
 	private double sum;
+	
+	@Column(name = "elements")
 	private int NumberOfElements;
 	
+	@OneToMany(mappedBy = "historyItem")
+	private List<SoldItem> soldItems;
+	
+ 
+	public HistoryItem() {
+		
+	}
 	public HistoryItem(List<SoldItem> listsold, String date, String time, Long id) {
 		this.NumberOfElements=listsold.size();
 		this.soldItems = listsold;

@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
@@ -14,28 +15,36 @@ import java.awt.event.ActionEvent;
 
 
 
+
+
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.JOptionPane;
 
-public class StockTab {
+import org.apache.log4j.Logger;
 
+public class StockTab {
+  private static final Logger log = Logger.getLogger(StockTab.class);
   private JButton addItem;
   private JTextField newItemID;
   private JTextField newItemName;
   private JTextField newItemPrice;
   private JTextField newItemQuantity;
   private JTextField newItemDescription;
-  
+  private final SalesDomainController controller;
   private SalesSystemModel model;
 
-  public StockTab(SalesSystemModel model) {
+  public StockTab(SalesSystemModel model,  SalesDomainController controller) {
     this.model = model;
+    this.controller = controller;
+    
   }
 
   // warehouse stock tab - consists of a menu and a table
@@ -132,7 +141,8 @@ public class StockTab {
     JPanel panel = new JPanel();
 
     JTable table = new JTable(model.getWarehouseTableModel());
-
+    table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+ 
     JTableHeader header = table.getTableHeader();
     header.setReorderingAllowed(false);
 
@@ -151,5 +161,6 @@ public class StockTab {
     panel.setBorder(BorderFactory.createTitledBorder("Warehouse status"));
     return panel;
   }
+
 
 }
