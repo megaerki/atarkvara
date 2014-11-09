@@ -45,6 +45,10 @@ public class SoldItem implements Cloneable, DisplayableItem {
         
     }
     
+    public SoldItem(){
+    	
+    }
+    
     public Long getId() {
         return id;
     }
@@ -73,4 +77,5 @@ public class SoldItem implements Cloneable, DisplayableItem {
         return stockItem;
     }
     
+
 }
