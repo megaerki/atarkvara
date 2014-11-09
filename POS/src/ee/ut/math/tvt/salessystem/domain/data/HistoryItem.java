@@ -2,6 +2,8 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.List;
 
+
+
 public class HistoryItem implements Cloneable, DisplayableItem {
     private List<SoldItem> soldItems;
     private Long id;

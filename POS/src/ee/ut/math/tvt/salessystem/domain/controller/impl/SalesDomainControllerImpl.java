@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.util.HibernateUtil;
+
 
 /**
  * Implementation of the sales domain controller.
@@ -18,6 +20,8 @@ import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 public class SalesDomainControllerImpl implements SalesDomainController {
 	static List<StockItem> dataset = new ArrayList<StockItem>();
 	public static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
+	
+	private Session session = HibernateUtil.currentSession();
 	
 	public void submitCurrentPurchase(List<SoldItem> goods) throws VerificationFailedException {
 		// Let's assume we have checked and found out that the buyer is underaged and
@@ -102,6 +106,10 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	
 	public void endSession() {
 	    HibernateUtil.closeSession();
+	}
+	
+	public Session getSession(){
+		return session;
 	}
 
 }
