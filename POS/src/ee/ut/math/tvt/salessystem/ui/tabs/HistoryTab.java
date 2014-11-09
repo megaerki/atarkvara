@@ -92,8 +92,16 @@ public class HistoryTab {
       }
     
     protected void mouseClickedActionHandler(int rowNr){
-		List<HistoryItem> historyList = SalesDomainControllerImpl.historydataset;
+    	 
+    	List<HistoryItem> historyList = SalesDomainControllerImpl.historydataset;
+     
+		System.out.println("Historylist:");
+		System.out.println(historyList);
+		System.out.println("RowNr:");
+		System.out.println(rowNr);
 		HistoryItem b = historyList.get(rowNr);
+		System.out.println("b:");
+		System.out.println(b);
 		PurchaseHistoryTableModel history = new PurchaseHistoryTableModel();
 		history.populateWithData(b.getSoldItems());
 		

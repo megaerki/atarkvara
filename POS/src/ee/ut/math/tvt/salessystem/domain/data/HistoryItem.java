@@ -85,6 +85,15 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	public int getNumberOfElements() {
 		return NumberOfElements;
 	}
+	public static long size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public static void add(HistoryItem newElem) {
+		// TODO Auto-generated method stub
+		
+	}
+ 
 
 }
 	

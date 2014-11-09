@@ -78,17 +78,17 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		//return dataset;
 	//}
 	
-	public List<HistoryItem> loadHistoryState() {
-		StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0, 5);
-	
-		SoldItem sold1 =new SoldItem(chips, 1);
-		List<SoldItem> listsold=new ArrayList<SoldItem>();
-		listsold.add(sold1);
-		
-		HistoryItem newElem= new HistoryItem(listsold, "Jan 01 2011","11:11:11",(long) 0);
-		historydataset.add(newElem);
-		return historydataset;
-	}
+	//public List<HistoryItem> loadHistoryState() {
+	//	StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0, 5);
+	//
+	//	SoldItem sold1 =new SoldItem(chips, 1);
+	//	List<SoldItem> listsold=new ArrayList<SoldItem>();
+	//	listsold.add(sold1);
+	//	
+	//	HistoryItem newElem= new HistoryItem(listsold, "Jan 01 2011","11:11:11",(long) 0);
+	//	historydataset.add(newElem);
+	//	return historydataset;
+	//}
 
 	@Override
 	public List<HistoryItem> loadDetailedDeatailHistoryState() {
