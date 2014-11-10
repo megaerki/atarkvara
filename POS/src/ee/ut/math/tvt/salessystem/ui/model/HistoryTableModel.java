@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import java.util.List;
 
 /**
  * History table model.
@@ -15,6 +17,7 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 	private static final long serialVersionUID = 1L;
 	private HistoryItem sold;
+	private SalesDomainController domainController;
 
 //	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
 	
@@ -41,11 +44,11 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 		 
 		 rows.add(historyIt);
 		 fireTableDataChanged();
-		 	
+	
 //		    Class.forName("org.hsqldb.jdbc.JDBCDriver");
 //		    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
 //		    Statement stmt = (Statement) con.createStatement();
-//		    String insert = "INSERT INTO SOLDITEM(sale_id,name)      VALUES ('"+sold.getId()+"','"+sold.getName()+"');";
+//		    String insert = "INSERT INTO SOLDITEM(sale_id,name)      VALUES ('100','name');";
 //		    stmt.executeUpdate(insert);
 		 
 		

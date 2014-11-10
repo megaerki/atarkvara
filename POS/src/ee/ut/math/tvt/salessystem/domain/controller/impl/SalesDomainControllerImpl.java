@@ -16,6 +16,7 @@ import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 
@@ -26,6 +27,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	//static List<StockItem> dataset = new ArrayList<StockItem>();
 	public static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
 	private SalesSystemModel model;
+	private HistoryTableModel his;
 	
 	private Session session = HibernateUtil.currentSession();
 	public List<StockItem> getAllStockItems() {
@@ -126,6 +128,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		historydataset.add(newElem);
 		try {
 			model.getHistoryTableModel().addItem(newElem);
+			
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,6 +141,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	}
 	
 	public void endSession() {
+		
 	    HibernateUtil.closeSession();
 	}
 	

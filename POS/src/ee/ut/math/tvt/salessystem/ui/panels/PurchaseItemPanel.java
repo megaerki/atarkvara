@@ -46,6 +46,8 @@ public class PurchaseItemPanel extends JPanel {
     private JTextField priceField;
     private JTextField barCodeField;
     private JButton addItemButton;
+    public static int quanty;
+    public static StockItem stock;
     ///static List<StockItem> dataset = new ArrayList<StockItem>();
     
     // ??? String[] midagi;
@@ -234,7 +236,7 @@ public class PurchaseItemPanel extends JPanel {
     	
         // add chosen item to the shopping cart.
         StockItem stockItem = getStockItemByBarcode();
-		
+		stock=  getStockItemByBarcode();
 		double price = stockItem.getPrice();
 		try{
 		int quantity1=Integer.parseInt(quantityField.getText());
@@ -250,11 +252,13 @@ public class PurchaseItemPanel extends JPanel {
           
             try {
                 quantity = Integer.parseInt(quantityField.getText());
+                //quanty=Integer.parseInt(quantityField.getText());
                 if (quantity > stockItem.getQuantity()) {
                 	throw new SalesSystemException();
 				}
                 else{
                 	stockItem.setQuantity(stockItem.getQuantity() - quantity);
+                	//stock.setQuantity(stockItem.getQuantity() - quantity);
                 	model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));    				
                 }	
             }
@@ -291,6 +295,7 @@ public class PurchaseItemPanel extends JPanel {
     }
 
     public void reset() {
+    	
     	setBooleanFalse();
     	sum=0;
     	
@@ -351,5 +356,15 @@ public class PurchaseItemPanel extends JPanel {
 
         return gc;
     }
+
+	public int getQuanty() {
+		
+		return quanty;
+	}
+
+	public StockItem getStock() {
+		// TODO Auto-generated method stub
+		return stock;
+	}
 
 }

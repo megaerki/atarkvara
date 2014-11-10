@@ -47,8 +47,8 @@ public class ConsoleUI {
 			System.out.println("=       Sales System      =");
 			System.out.println("===========================");
 			printUsage();
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					System.in));
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
 			String command = "";
 
 			while (true) {
@@ -90,6 +90,7 @@ public class ConsoleUI {
 				.println("a IDX NR \tAdd NR of stock item with index IDX to the cart");
 		System.out.println("p\t\tPurchase the shopping cart");
 		System.out.println("r\t\tReset the shopping cart");
+		System.out.println("q\t\tExit");
 		System.out.println("-------------------------");
 	}
 

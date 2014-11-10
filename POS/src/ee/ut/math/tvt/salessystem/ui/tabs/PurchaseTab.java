@@ -1,7 +1,11 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
@@ -12,6 +16,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -43,6 +51,12 @@ public class PurchaseTab {
   private JButton cancelPurchase;
 
   private PurchaseItemPanel purchasePane;
+  
+  private StockItem stock;
+ 
+  
+  private PurchaseInfoTableModel pur;
+  private SoldItem sold;
 
   private SalesSystemModel model;
   public   boolean addCart;
@@ -243,6 +257,15 @@ private void getBoolean(){
         	//saves order on click
         	if (isDouble(cha1.getText())){
         		submitPurchaseButtonClicked();
+        		//int q= purchasePane.getQuanty();
+        		//stock=purchasePane.getStockItemByBarcode();
+        		
+        		//try{
+        		//pur.addItemDB(new SoldItem(stock, q));
+        		//}catch(NullPointerException r){
+        			
+        		//}
+        		
             	confirm.setVisible(false);
         	}
         	else{
@@ -332,6 +355,7 @@ private void getBoolean(){
       log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
       //domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
       domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
+     
       endSale();   
       //System.out.println(model.getHistoryTableModel().getRowCount());
       model.getCurrentPurchaseTableModel().clear();

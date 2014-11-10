@@ -28,9 +28,6 @@ public class Intro {
 			log.warn(e.getMessage());
 		}
 		
-		String tere = new String();
-		tere.length();
-		
 		if (args.length == 1 && args[0].equals(MODE)) {
 			log.debug("Mode: " + MODE);
 

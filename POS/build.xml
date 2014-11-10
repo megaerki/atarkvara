@@ -11,8 +11,6 @@
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="etc.dir" value="${basedir}/etc" />
-	
-	<!-- database variables -->
 	<property name="conf.dir" value="${basedir}/conf" />
 	<property name="data.dir"	value="${basedir}/data"/>
 	<property name="db.file"	value="${data.dir}/POSdb"/>
@@ -30,11 +28,13 @@
 		<pathelement location="${img.dir}"/>
 		<pathelement location="${conf.dir}"/>
 		<pathelement location="${data.dir}"/>
+		
 		<fileset dir="${lib.dir}">
 	        <include name="**/*.jar"/>
 	    </fileset>
+		
 		<fileset dir="${lib.hibernate.dir}">
-             <include name="*.jar"/>
+             <include name="**/*.jar"/>
         </fileset>
 	</path>	
 	
@@ -163,7 +163,7 @@
 		
 		<mkdir dir="${doc.dir}"/>
 		
-		<javadoc destdir="${doc.dir}" classpathref="compile.classpath">
+		<javadoc destdir="${doc.dir}" classpathref="POS.classpath">
 			<fileset dir="${src.dir}" includes="**/*.java"/>
 		</javadoc>
 		
@@ -233,25 +233,29 @@
 	<!-- _____________________________________DB MANAGER___________________________________________ -->
 	
 	<target name="dbmanager" description="Start the HSQLDB manager">
-	        <java
-	            classname="org.hsqldb.util.DatabaseManagerSwing"
-	            classpathref="POS.classpath"
-	            fork="yes"
-	        >
-	            <arg line="--user sa --url ${db.url}" />
-	        </java>
-	    </target>
+		
+        <java 
+        	classname="org.hsqldb.util.DatabaseManagerSwing"
+            classpathref="POS.classpath"
+            fork="yes">
+        	
+            <arg line="--user sa --url ${db.url}" />
+        </java>
+	
+    </target>
 	
 	<!-- _____________________________________DB START___________________________________________ -->
 		
     <target name="startdb" description="Start the HSQLDB with the default params">
+    	    	
         <java
             classname="org.hsqldb.Server"
             classpathref="POS.classpath"
-            fork="yes"
-        >
+            fork="yes">
+        	
             <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
         </java>
-</target>
+    	
+	</target>
 	
 </project>

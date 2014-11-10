@@ -54,6 +54,7 @@ public class SalesSystemModel {
 	}
 	public void regetWarehouseTableModel() {
         List<StockItem> stockItems = domainController.getAllStockItems();
+  
         warehouseTableModel.populateWithData(stockItems);
 }
 }

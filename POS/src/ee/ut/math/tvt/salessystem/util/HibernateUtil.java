@@ -1,13 +1,18 @@
 package ee.ut.math.tvt.salessystem.util;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+
+import ee.ut.math.tvt.a.Intro;
+
 import java.io.File;
+import java.util.Properties;
 /**
  * Utility class that makes sure we has a single open hibernate session.
  */
@@ -19,11 +24,11 @@ public class HibernateUtil {
 
 	static {
 		try {
+			
 			// Create the SessionFactory from hibernate.cfg.xml
 			Configuration configuration = new Configuration();
-			//File file = new File("conf/hibernate.cfg.xml");
-			configuration.configure();
-
+			configuration.configure(HibernateUtil.class.getResource("/hibernate.cfg.xml"));
+			
 			serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
