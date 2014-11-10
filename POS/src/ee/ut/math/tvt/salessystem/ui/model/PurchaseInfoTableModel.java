@@ -1,5 +1,10 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
@@ -62,14 +67,45 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
          * XXX In case such stockItem already exists increase the quantity of the
          * existing stock.
          */
-        
+
         rows.add(item);
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
         fireTableDataChanged();
+		try{
+		    Class.forName("org.hsqldb.jdbc.JDBCDriver");
+		    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
+		    Statement stmt = (Statement) con.createStatement();
+		    String insert = "INSERT INTO SOLDITEM(sale_id,name,quantity,itemprice)      VALUES ('"+item.getId()+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
+		    stmt.executeUpdate(insert);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     }
 
 	public void addItem(HistoryItem newElem) {
 		// TODO Auto-generated method stub
+		
+	}
+	public void addItemDB(final SoldItem item) {
+		try{
+	    Class.forName("org.hsqldb.jdbc.JDBCDriver");
+	    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
+	    Statement stmt = (Statement) con.createStatement();
+	    String insert = "INSERT INTO SOLDITEM(sale_id,name)      VALUES ('"+item.getId()+"','"+item.getName()+"');";
+	    stmt.executeUpdate(insert);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(NullPointerException e){
+			
+		}
 		
 	}
 }
