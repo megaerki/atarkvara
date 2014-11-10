@@ -1,10 +1,15 @@
 package ee.ut.math.tvt.salessystem.domain.controller.impl;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
@@ -46,7 +51,16 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	    String[] parts = date.toString().split(" ");
 	    Long id= (long) historydataset.size();
 		HistoryItem newElem= new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), parts[1]+" "+parts[2]+" "+parts[5], parts[3],id);
-		model.getHistoryTableModel().addItem(newElem);
+		try {
+			model.getHistoryTableModel().addItem(newElem);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 
 	}
 	
@@ -110,7 +124,15 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	    Long id= (long) historydataset.size();
 		HistoryItem newElem= new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), parts[1]+" "+parts[2]+" "+parts[5], parts[3],id);
 		historydataset.add(newElem);
-		model.getHistoryTableModel().addItem(newElem);
+		try {
+			model.getHistoryTableModel().addItem(newElem);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

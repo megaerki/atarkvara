@@ -1,6 +1,12 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 
 /**
  * History table model.
@@ -8,6 +14,7 @@ import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 
 public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 	private static final long serialVersionUID = 1L;
+	private HistoryItem sold;
 
 //	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
 	
@@ -29,9 +36,19 @@ public class HistoryTableModel extends SalesSystemTableModel<HistoryItem> {
 		}
 		throw new IllegalArgumentException("Column index error");
 	}
-	 public void addItem(final HistoryItem historyIt) {
+	
+	 public void addItem(final HistoryItem historyIt) throws SQLException, ClassNotFoundException {
+		 
 		 rows.add(historyIt);
 		 fireTableDataChanged();
+		 	
+//		    Class.forName("org.hsqldb.jdbc.JDBCDriver");
+//		    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
+//		    Statement stmt = (Statement) con.createStatement();
+//		    String insert = "INSERT INTO SOLDITEM(sale_id,name)      VALUES ('"+sold.getId()+"','"+sold.getName()+"');";
+//		    stmt.executeUpdate(insert);
+		 
+		
 	 }
  
 }
