@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
@@ -18,6 +19,8 @@ import java.awt.event.ActionEvent;
 
 
 
+
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -29,6 +32,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
+
+import com.sun.xml.internal.ws.api.config.management.policy.ManagedServiceAssertion.ImplementationRecord;
 
 public class StockTab {
   private static final Logger log = Logger.getLogger(StockTab.class);
@@ -105,6 +110,7 @@ public class StockTab {
   		  
   		  try {
   			  model.getWarehouseTableModel().addItem(new StockItem(
+  					 
   					  Long.parseLong(NewID), 
   					  NewName, 
   					  NewDescription,

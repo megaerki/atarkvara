@@ -24,12 +24,12 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  * Implementation of the sales domain controller.
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
-	//static List<StockItem> dataset = new ArrayList<StockItem>();
+	static List<StockItem> dataset = new ArrayList<StockItem>();
 	public static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
 	private SalesSystemModel model;
 	private HistoryTableModel his;
 	
-	private Session session = HibernateUtil.currentSession();
+	final Session session = HibernateUtil.currentSession();
 	public List<StockItem> getAllStockItems() {
 		List<StockItem> result = session.createQuery("from StockItem").list();
 		return result;
@@ -48,6 +48,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	
 	}
 
+	/*//Seems to be unused?
 	public void submitHistory(List<SoldItem> goods, SalesSystemModel model) {
 		Date date = new Date();
 	    String[] parts = date.toString().split(" ");
@@ -64,7 +65,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 			e.printStackTrace();
 		}
 		 
-	}
+	}*/
 	
 	public void cancelCurrentPurchase() throws VerificationFailedException {				
 		// XXX - Cancel current purchase

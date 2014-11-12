@@ -245,12 +245,10 @@ private void getBoolean(){
 	  can.addActionListener(new ActionListener() {
           @Override
 		public void actionPerformed(ActionEvent e) {     		
-        	confirm.setVisible(false);
-              
-              
-              
+        	confirm.setVisible(false); 
           }
       });
+	  
 	  acc.addActionListener(new ActionListener() {
           @Override
 		public void actionPerformed(ActionEvent e) {     		
@@ -350,12 +348,18 @@ private void getBoolean(){
   
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
-    log.info("Sale complete");
-    //try {
-      log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-      //domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
-      domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
-     
+		log.info("Sale complete");
+		//try {
+		log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+		//domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
+		domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
+		
+//		Class.forName("org.hsqldb.jdbc.JDBCDriver");
+//	    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
+//	    Statement stmt = (Statement) con.createStatement();
+//	    String insert = "INSERT INTO HISTORYITEM(sale_id,name,quantity,itemprice)      VALUES ('"+1+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
+//	    stmt.executeUpdate(insert);
+	    
       endSale();   
       //System.out.println(model.getHistoryTableModel().getRowCount());
       model.getCurrentPurchaseTableModel().clear();
