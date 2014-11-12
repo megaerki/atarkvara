@@ -66,14 +66,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 				insert = "INSERT INTO STOCKITEM(id,name,price,quantity,description) VALUES('"+stockItem.getId()+"','"+stockItem.getName()+"','"+stockItem.getPrice()+"','"+stockItem.getQuantity()+"','"+stockItem.getDescription()+"')";
 			}
 			stmt.executeUpdate(insert);	
-				
 		} catch (ClassNotFoundException e) {
 			log.debug(e);
 		} catch (SQLException e) {
 			log.debug(e);
 		}
 	   
-		
 		try {
 			StockItem item = getItemById(stockItem.getId());
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
@@ -88,8 +86,6 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		fireTableDataChanged();
 	}
 
-	 
-	
 	@Override
 	public String toString() {
 		final StringBuffer buffer = new StringBuffer();
