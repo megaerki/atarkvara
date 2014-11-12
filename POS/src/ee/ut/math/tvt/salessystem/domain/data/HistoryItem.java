@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "HISTORYITEM")
 public class HistoryItem implements Cloneable, DisplayableItem {
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +35,6 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	@OneToMany(mappedBy = "historyItem")
 	private List<SoldItem> soldItems;
 	
- 
 	public HistoryItem() {
 		
 	}
@@ -98,6 +96,5 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 		return null;
 	}
  
-
 }
 	
