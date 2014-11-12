@@ -7,6 +7,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -15,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 import org.apache.log4j.Logger;
 
@@ -22,6 +28,7 @@ import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerIm
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseHistoryTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.util.DatabaseUtil;
  
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -92,27 +99,35 @@ public class HistoryTab {
       }
     
     protected void mouseClickedActionHandler(int rowNr){
-    	 
-    	List<HistoryItem> historyList = SalesDomainControllerImpl.historydataset;
-     
-		System.out.println("Historylist:");
-		System.out.println(historyList);
-		System.out.println("RowNr:");
-		System.out.println(rowNr);
-		HistoryItem b = historyList.get(rowNr);
-		System.out.println("b:");
-		System.out.println(b);
-		PurchaseHistoryTableModel history = new PurchaseHistoryTableModel();
-		history.populateWithData(b.getSoldItems());
 		
+    	ResultSet set;
+    	TableModel tablemodel = null;
+	    try {
+			Class.forName("org.hsqldb.jdbc.JDBCDriver");
+			Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
+		    Statement stmt = (Statement) con.createStatement();
+		    String insert = "SELECT STOCKITEM_ID, NAME, QUANTITY, ITEMPRICE, (QUANTITY + ITEMPRICE) AS TOTAL FROM SOLDITEM WHERE SALE_ID = "+rowNr;
+		    stmt.execute(insert);
+		    set = stmt.getResultSet();
+		    stmt.close();
+		    
+		    tablemodel = DatabaseUtil.resultSetToTableModel(set);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			log.debug("historyTab: " + e);
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			log.debug("historyTab: " + e);
+		}
+	    
 		log.info("History tab row " + rowNr + " opened");
 		
 		JFrame frame = new JFrame("Selected Purchase");
-		JTable table = new JTable (history);
+		JTable table = new JTable (tablemodel);
 		frame.getContentPane().add(table, BorderLayout.CENTER);
 		frame.pack();
 		frame.setVisible(true);
     }
-    
 }
 

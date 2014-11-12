@@ -71,9 +71,7 @@ public class SalesSystemUI extends JFrame {
     setSize(width, height);
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     setLocation((screen.width - width) / 2, (screen.height - height) / 2);
-    
-    
-    
+      
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
@@ -89,11 +87,6 @@ public class SalesSystemUI extends JFrame {
   
   }
   
-
-
-  
-  
-
   private void drawWidgets() {
     JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -103,7 +96,6 @@ public class SalesSystemUI extends JFrame {
 
     getContentPane().add(tabbedPane);
   }
-
 }
 
 
