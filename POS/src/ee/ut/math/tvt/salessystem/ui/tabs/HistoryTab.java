@@ -90,15 +90,15 @@ public class HistoryTab {
         table.addMouseListener(new MouseAdapter() {
         	@Override
 			public void mouseClicked(MouseEvent event){
-        		int rowNr = table.getSelectedRow();
-        		mouseClickedActionHandler(rowNr);
+        		Long id = Long.parseLong(table.getValueAt(table.getSelectedRow(), 0).toString());
+        		mouseClickedActionHandler(id);
         	}
 		});
         
         return panel;
       }
     
-    protected void mouseClickedActionHandler(int rowNr){
+    protected void mouseClickedActionHandler(long id){
 		
     	ResultSet set;
     	TableModel tablemodel = null;
@@ -106,7 +106,7 @@ public class HistoryTab {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
 			Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
 		    Statement stmt = (Statement) con.createStatement();
-		    String insert = "SELECT STOCKITEM_ID, NAME, QUANTITY, ITEMPRICE, (QUANTITY * ITEMPRICE) AS TOTAL FROM SOLDITEM WHERE SALE_ID = "+rowNr;
+		    String insert = "SELECT STOCKITEM_ID, NAME, QUANTITY, ITEMPRICE, (QUANTITY * ITEMPRICE) AS TOTAL FROM SOLDITEM WHERE SALE_ID = "+id;
 		    stmt.execute(insert);
 		    set = stmt.getResultSet();
 		    stmt.close();
@@ -121,7 +121,7 @@ public class HistoryTab {
 			log.debug("historyTab: " + e);
 		}
 	    
-		log.info("History tab row " + rowNr + " opened");
+		log.info("History tab row " + id + " opened");
 		
 		JFrame frame = new JFrame("Selected Purchase");
 		JTable table = new JTable (tablemodel);

@@ -1,13 +1,16 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -18,8 +21,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -33,6 +41,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -354,12 +363,73 @@ private void getBoolean(){
 		//domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
 		domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
 		
-//		Class.forName("org.hsqldb.jdbc.JDBCDriver");
-//	    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
-//	    Statement stmt = (Statement) con.createStatement();
-//	    String insert = "INSERT INTO HISTORYITEM(sale_id,name,quantity,itemprice)      VALUES ('"+1+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
-//	    stmt.executeUpdate(insert);
-	    
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+		Date date = new Date();
+//		try{
+//			Session ses = HibernateUtil.currentSession();
+//			ses.beginTransaction();
+//			HistoryItem hi = new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), dateFormat.format(date), timeFormat.format(date), 6L);
+//			ses.persist(hi);
+//			ses.getTransaction().commit();
+//			ses.flush();
+//			ses.close();
+//		} catch (Exception e){
+//			log.debug(e);
+//		}
+
+		List<SoldItem> list = model.getCurrentPurchaseTableModel().getTableRows();
+		
+		try {
+			Class.forName("org.hsqldb.jdbc.JDBCDriver");
+			Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
+		    Statement stmt = (Statement) con.createStatement();
+		    
+			int elements = 0;
+			double cost = 0;
+			for (int i = 0; i < list.size(); i++){
+				elements += list.get(i).getQuantity();
+				cost += list.get(i).getSum();
+			}
+			
+			long id = 0;
+			
+		    String insert = "INSERT INTO HISTORYITEM(sale_date,sale_time,cost,elements) VALUES('"+
+					dateFormat.format(date)+"','"+
+					timeFormat.format(date)+"','"+
+					cost+"','"+
+					elements+"')";
+		    stmt.executeUpdate(insert, Statement.RETURN_GENERATED_KEYS);
+		    ResultSet rs = stmt.getGeneratedKeys();
+		    if (rs.next()){
+		    	id = rs.getInt(1);
+		    }
+		    else{
+		    	log.debug("Generated key not received.");
+		    }
+		    
+		    System.out.println(id);
+		    for (int i = 0; i < list.size(); i++){
+		    	insert = "INSERT INTO SOLDITEM(sale_id,stockitem_id,name,quantity,itemprice) VALUES('"+
+						id+"','"+
+						list.get(i).getStockItem().getId()+"','"+
+						list.get(i).getName()+"','"+
+						list.get(i).getQuantity()+"','"+
+						list.get(i).getPrice()+"')";
+			    stmt.executeUpdate(insert);
+			    insert = "UPDATE STOCKITEM SET quantity = (quantity -"+
+			    		list.get(i).getQuantity()+
+			    		") where id = "+
+			    		list.get(i).getStockItem().getId();
+			    stmt.executeUpdate(insert);
+			}
+		    
+		    stmt.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			log.debug(e);
+		}
+		
       endSale();   
       //System.out.println(model.getHistoryTableModel().getRowCount());
       model.getCurrentPurchaseTableModel().clear();

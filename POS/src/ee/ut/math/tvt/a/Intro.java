@@ -29,7 +29,7 @@ public class Intro {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e){
-			log.warn(e.getMessage());
+			log.debug(e.getMessage());
 		}
 		
 		if (args.length == 1 && args[0].equals(MODE)) {
@@ -39,10 +39,12 @@ public class Intro {
 				ConsoleUI cui = new ConsoleUI(domainController);
 				cui.run();
 			} catch (Exception e){
+				log.debug(e.getMessage());
 				System.out.println("Error occured: " + e);
 				System.exit(0);
 			}
-		} else {
+		} 
+		else {
 			IntroUI introUI = new IntroUI();
 			introUI.frame.setVisible(true);
 			introUI.frame.setAlwaysOnTop(true);
@@ -51,6 +53,7 @@ public class Intro {
 			final SalesSystemUI ui = new SalesSystemUI(domainController);
 			ui.setVisible(true);
 			} catch (Exception e){
+				log.debug(e.getMessage());
 				JOptionPane.showMessageDialog(introUI.frame, e.toString(), "Error occured", JOptionPane.PLAIN_MESSAGE);
 				System.exit(0);
 			}
@@ -61,8 +64,9 @@ public class Intro {
 				Thread.sleep(3000);
 				log.info("Intro aken suletud");
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				log.debug(e.getMessage());
 			}
+			
 			introUI.frame.setVisible(false);
 		}
 	}

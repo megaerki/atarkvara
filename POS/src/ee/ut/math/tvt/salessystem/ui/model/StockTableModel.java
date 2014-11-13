@@ -63,7 +63,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 				insert = "UPDATE STOCKITEM SET quantity = (quantity +"+stockItem.getQuantity()+") where id = "+stockItem.getId();
 			}
 			else{
-				insert = "INSERT INTO STOCKITEM(id,name,price,quantity,description) VALUES('"+stockItem.getId()+"','"+stockItem.getName()+"','"+stockItem.getPrice()+"','"+stockItem.getQuantity()+"','"+stockItem.getDescription()+"')";
+				insert = "INSERT INTO STOCKITEM(id,name,price,quantity,description) VALUES('"+
+						stockItem.getId()+"','"+
+						stockItem.getName()+"','"+
+						stockItem.getPrice()+"','"+
+						stockItem.getQuantity()+"','"+
+						stockItem.getDescription()+"')";
 			}
 			stmt.executeUpdate(insert);	
 			stmt.close();
