@@ -121,10 +121,9 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	@Override
 	public void saveHistoryState(List<SoldItem> tableRows,
-		SalesSystemModel model) {
+		SalesSystemModel model, long id) {
 		Date date = new Date();
 	    String[] parts = date.toString().split(" ");
-	    Long id= (long) historydataset.size();
 		HistoryItem newElem= new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), parts[1]+" "+parts[2]+" "+parts[5], parts[3],id);
 		historydataset.add(newElem);
 		

@@ -361,22 +361,11 @@ private void getBoolean(){
 		//try {
 		log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
 		//domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
-		domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
+		long id = 0;
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
 		Date date = new Date();
-//		try{
-//			Session ses = HibernateUtil.currentSession();
-//			ses.beginTransaction();
-//			HistoryItem hi = new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), dateFormat.format(date), timeFormat.format(date), 6L);
-//			ses.persist(hi);
-//			ses.getTransaction().commit();
-//			ses.flush();
-//			ses.close();
-//		} catch (Exception e){
-//			log.debug(e);
-//		}
 
 		List<SoldItem> list = model.getCurrentPurchaseTableModel().getTableRows();
 		
@@ -391,9 +380,7 @@ private void getBoolean(){
 				elements += list.get(i).getQuantity();
 				cost += list.get(i).getSum();
 			}
-			
-			long id = 0;
-			
+						
 		    String insert = "INSERT INTO HISTORYITEM(sale_date,sale_time,cost,elements) VALUES('"+
 					dateFormat.format(date)+"','"+
 					timeFormat.format(date)+"','"+
@@ -407,8 +394,8 @@ private void getBoolean(){
 		    else{
 		    	log.debug("Generated key not received.");
 		    }
+		    rs.close();
 		    
-		    System.out.println(id);
 		    for (int i = 0; i < list.size(); i++){
 		    	insert = "INSERT INTO SOLDITEM(sale_id,stockitem_id,name,quantity,itemprice) VALUES('"+
 						id+"','"+
@@ -429,7 +416,8 @@ private void getBoolean(){
 			// TODO Auto-generated catch block
 			log.debug(e);
 		}
-		
+	
+		domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model, id);
       endSale();   
       //System.out.println(model.getHistoryTableModel().getRowCount());
       model.getCurrentPurchaseTableModel().clear();
