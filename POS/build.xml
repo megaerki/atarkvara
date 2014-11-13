@@ -2,21 +2,21 @@
 <project basedir="." name="POS" default="build">
 
 	<!-- Defineeri muutujad -->
-	<property name="build.dir" value="${basedir}/build"/>
-	<property name="build.classes.dir" value="${build.dir}/classes"/>
-	<property name="src.dir" value="${basedir}/src"/>
-	<property name="dist.dir" value="${basedir}/build/jar"/>
-	<property name="doc.dir" value="${build.dir}/doc"/>
-	<property name="img.dir" value="${basedir}/img"/>
-	<property name="test.reports.dir" value="${build.dir}/reports/"/>
-	<property name="lib.dir" value="${basedir}/lib" />
-	<property name="etc.dir" value="${basedir}/etc" />
-	<property name="conf.dir" value="${basedir}/conf" />
-	<property name="data.dir"	value="${basedir}/data"/>
-	<property name="db.file"	value="${data.dir}/POSdb"/>
-	<property name="db.alias"	value="POS"/>
-	<property name="db.url" 	value="jdbc:hsqldb:hsql://localhost/POS"/>
-	<property name="lib.hibernate.dir"   value="${lib.dir}/hibernate"/>
+	<property name="build.dir" 			value="${basedir}/build"/>
+	<property name="build.classes.dir" 	value="${build.dir}/classes"/>
+	<property name="src.dir" 			value="${basedir}/src"/>
+	<property name="dist.dir" 			value="${basedir}/build/jar"/>
+	<property name="doc.dir" 			value="${build.dir}/doc"/>
+	<property name="img.dir" 			value="${basedir}/img"/>
+	<property name="test.reports.dir" 	value="${build.dir}/reports/"/>
+	<property name="lib.dir" 			value="${basedir}/lib" />
+	<property name="etc.dir" 			value="${basedir}/etc" />
+	<property name="conf.dir" 			value="${basedir}/conf" />
+	<property name="data.dir"			value="${basedir}/data"/>
+	<property name="db.file"			value="${data.dir}/POSdb"/>
+	<property name="db.alias"			value="POS"/>
+	<property name="db.url" 			value="jdbc:hsqldb:hsql://localhost/POS"/>
+	<property name="lib.hibernate.dir"  value="${lib.dir}/hibernate"/>
 	
 
 <!-- _______________________________________________________________________________________ -->
@@ -36,6 +36,7 @@
 		<fileset dir="${lib.hibernate.dir}">
              <include name="**/*.jar"/>
         </fileset>
+		
 	</path>	
 	
 <!-- ______________________________________RUNC______________________________________________ -->
