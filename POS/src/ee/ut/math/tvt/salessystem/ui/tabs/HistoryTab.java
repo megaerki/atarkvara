@@ -106,7 +106,7 @@ public class HistoryTab {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
 			Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
 		    Statement stmt = (Statement) con.createStatement();
-		    String insert = "SELECT STOCKITEM_ID, NAME, QUANTITY, ITEMPRICE, (QUANTITY + ITEMPRICE) AS TOTAL FROM SOLDITEM WHERE SALE_ID = "+rowNr;
+		    String insert = "SELECT STOCKITEM_ID, NAME, QUANTITY, ITEMPRICE, (QUANTITY * ITEMPRICE) AS TOTAL FROM SOLDITEM WHERE SALE_ID = "+rowNr;
 		    stmt.execute(insert);
 		    set = stmt.getResultSet();
 		    stmt.close();
