@@ -53,7 +53,7 @@ public interface SalesDomainController {
             throws VerificationFailedException;
 
 	public void saveHistoryState(List<SoldItem> tableRows,
-			SalesSystemModel model, long id);
+			SalesSystemModel model);
 	
 	public void endSession();
 

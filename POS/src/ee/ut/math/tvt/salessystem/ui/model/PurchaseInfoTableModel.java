@@ -71,6 +71,19 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
         rows.add(item);
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
         fireTableDataChanged();
+		try{
+		    Class.forName("org.hsqldb.jdbc.JDBCDriver");
+		    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
+		    Statement stmt = (Statement) con.createStatement();
+		    String insert = "INSERT INTO SOLDITEM(sale_id,name,quantity,itemprice)      VALUES ('"+item.getId()+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
+		    stmt.executeUpdate(insert);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     }
 
 	public void addItem(HistoryItem newElem) {
@@ -82,7 +95,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	    Class.forName("org.hsqldb.jdbc.JDBCDriver");
 	    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
 	    Statement stmt = (Statement) con.createStatement();
-	    String insert = "INSERT INTO SOLDITEM(sale_id,name)      VALUES ('"+item.getId()+"','"+item.getName()+"');";
+	    String insert = "INSERT INTO SOLDITEM(sale_id,name,quantity,itemprice)      VALUES ('"+item.getId()+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
 	    stmt.executeUpdate(insert);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

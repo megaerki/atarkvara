@@ -24,12 +24,12 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  * Implementation of the sales domain controller.
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
-	static List<StockItem> dataset = new ArrayList<StockItem>();
+	//static List<StockItem> dataset = new ArrayList<StockItem>();
 	public static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
 	private SalesSystemModel model;
 	private HistoryTableModel his;
 	
-	final Session session = HibernateUtil.currentSession();
+	private Session session = HibernateUtil.currentSession();
 	public List<StockItem> getAllStockItems() {
 		List<StockItem> result = session.createQuery("from StockItem").list();
 		return result;
@@ -48,7 +48,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	
 	}
 
-	/*//Seems to be unused?
 	public void submitHistory(List<SoldItem> goods, SalesSystemModel model) {
 		Date date = new Date();
 	    String[] parts = date.toString().split(" ");
@@ -65,7 +64,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 			e.printStackTrace();
 		}
 		 
-	}*/
+	}
 	
 	public void cancelCurrentPurchase() throws VerificationFailedException {				
 		// XXX - Cancel current purchase
@@ -121,25 +120,28 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	@Override
 	public void saveHistoryState(List<SoldItem> tableRows,
-		SalesSystemModel model, long id) {
+			SalesSystemModel model) {
 		Date date = new Date();
 	    String[] parts = date.toString().split(" ");
+	    Long id= (long) historydataset.size();
 		HistoryItem newElem= new HistoryItem(model.getCurrentPurchaseTableModel().getTableRows(), parts[1]+" "+parts[2]+" "+parts[5], parts[3],id);
 		historydataset.add(newElem);
-		
 		try {
 			model.getHistoryTableModel().addItem(newElem);
-					
+			
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
+		
 	}
 	
 	public void endSession() {
+		
 	    HibernateUtil.closeSession();
 	}
 	
@@ -152,4 +154,5 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		// TODO Auto-generated method stub
 		this.model = model;
 	}
+
 }

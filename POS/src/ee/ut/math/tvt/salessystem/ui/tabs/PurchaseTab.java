@@ -1,16 +1,13 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
-import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -21,12 +18,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -41,7 +37,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -68,9 +63,11 @@ public class PurchaseTab {
   private SoldItem sold;
 
   private SalesSystemModel model;
+  private SalesSystemModel model2;
   public   boolean addCart;
   private  static  double changeMoney;
   private static String chanMoney;
+  List DB = new ArrayList();
   
   
   
@@ -254,10 +251,12 @@ private void getBoolean(){
 	  can.addActionListener(new ActionListener() {
           @Override
 		public void actionPerformed(ActionEvent e) {     		
-        	confirm.setVisible(false); 
+        	confirm.setVisible(false);
+              
+              
+              
           }
       });
-	  
 	  acc.addActionListener(new ActionListener() {
           @Override
 		public void actionPerformed(ActionEvent e) {     		
@@ -357,69 +356,19 @@ private void getBoolean(){
   
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
-		log.info("Sale complete");
-		//try {
-		log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
-		//domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
-		long id = 0;
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		DateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-		Date date = new Date();
-
-		List<SoldItem> list = model.getCurrentPurchaseTableModel().getTableRows();
-		
-		try {
-			Class.forName("org.hsqldb.jdbc.JDBCDriver");
-			Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
-		    Statement stmt = (Statement) con.createStatement();
-		    
-			int elements = 0;
-			double cost = 0;
-			for (int i = 0; i < list.size(); i++){
-				elements += list.get(i).getQuantity();
-				cost += list.get(i).getSum();
-			}
-						
-		    String insert = "INSERT INTO HISTORYITEM(sale_date,sale_time,cost,elements) VALUES('"+
-					dateFormat.format(date)+"','"+
-					timeFormat.format(date)+"','"+
-					cost+"','"+
-					elements+"')";
-		    stmt.executeUpdate(insert, Statement.RETURN_GENERATED_KEYS);
-		    ResultSet rs = stmt.getGeneratedKeys();
-		    if (rs.next()){
-		    	id = rs.getInt(1);
-		    }
-		    else{
-		    	log.debug("Generated key not received.");
-		    }
-		    rs.close();
-		    
-		    for (int i = 0; i < list.size(); i++){
-		    	insert = "INSERT INTO SOLDITEM(sale_id,stockitem_id,name,quantity,itemprice) VALUES('"+
-						id+"','"+
-						list.get(i).getStockItem().getId()+"','"+
-						list.get(i).getName()+"','"+
-						list.get(i).getQuantity()+"','"+
-						list.get(i).getPrice()+"')";
-			    stmt.executeUpdate(insert);
-			    insert = "UPDATE STOCKITEM SET quantity = (quantity -"+
-			    		list.get(i).getQuantity()+
-			    		") where id = "+
-			    		list.get(i).getStockItem().getId();
-			    stmt.executeUpdate(insert);
-			}
-		    
-		    stmt.close();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			log.debug(e);
-		}
-	
-		domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model, id);
+    log.info("Sale complete");
+    
+    //try {
+      log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
+      //domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
+      domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
+      
+      List<SoldItem> k=model.getCurrentPurchaseTableModel().getTableRows();
+      DB.add(domainController.getAllHistoryItems().toArray());
+      
       endSale();   
       //System.out.println(model.getHistoryTableModel().getRowCount());
+
       model.getCurrentPurchaseTableModel().clear();
     //} catch (VerificationFailedException e1) {
     //  log.error(e1.getMessage());

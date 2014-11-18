@@ -1,20 +1,12 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
-import org.hsqldb.Session;
 
-import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 /**
  * Stock item table model.
@@ -51,33 +43,6 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * @param stockItem
 	 */
 	public void addItem(final StockItem stockItem) {
-		
-		//Salvesta uus stockItem andmebaasi
-		try {
-			Class.forName("org.hsqldb.jdbc.JDBCDriver");
-			Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
-			Statement stmt = (Statement) con.createStatement();
-			String insert = "SELECT 1 from stockitem where id = "+stockItem.getId();
-			ResultSet set = stmt.executeQuery(insert);
-			if (set.next()){
-				insert = "UPDATE STOCKITEM SET quantity = (quantity +"+stockItem.getQuantity()+") where id = "+stockItem.getId();
-			}
-			else{
-				insert = "INSERT INTO STOCKITEM(id,name,price,quantity,description) VALUES('"+
-						stockItem.getId()+"','"+
-						stockItem.getName()+"','"+
-						stockItem.getPrice()+"','"+
-						stockItem.getQuantity()+"','"+
-						stockItem.getDescription()+"')";
-			}
-			stmt.executeUpdate(insert);	
-			stmt.close();
-		} catch (ClassNotFoundException e) {
-			log.debug(e);
-		} catch (SQLException e) {
-			log.debug(e);
-		}
-	   
 		try {
 			StockItem item = getItemById(stockItem.getId());
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
@@ -88,10 +53,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 			rows.add(stockItem);
 			log.debug("Added " + stockItem.getName()
 					+ " quantity of " + stockItem.getQuantity());
-		} 
+		}
 		fireTableDataChanged();
 	}
 
+	 
+	
 	@Override
 	public String toString() {
 		final StringBuffer buffer = new StringBuffer();

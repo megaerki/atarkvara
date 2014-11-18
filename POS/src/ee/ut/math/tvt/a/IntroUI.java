@@ -3,7 +3,6 @@ package ee.ut.math.tvt.a;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -35,12 +34,6 @@ public class IntroUI {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IntroUI.class.getResource("/logo.jpg")));
 		frame.setBounds(100, 100, 450, 300);
 		frame.getContentPane().setLayout(null);
-		
-		int width = 450;
-	    int height = 300;
-	    frame.setSize(width, height);
-	    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	    frame.setLocation((screen.width - width) / 2, (screen.height - height) / 2);
 		
 		JLabel lblProjektiJuhtLabel = new JLabel("Projektijuht");
 		lblProjektiJuhtLabel.setBounds(23, 24, 94, 14);
