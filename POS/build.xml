@@ -11,6 +11,7 @@
 	<property name="test.reports.dir" value="${build.dir}/reports/"/>
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="etc.dir" value="${basedir}/etc" />
+	<property name="test.dir"   value="${basedir}/test"/> 
 	
 	<!-- database variables -->
 	<property name="conf.dir" value="${basedir}/conf" />
@@ -36,6 +37,20 @@
 			             <include name="*.jar"/>
 			        </fileset>
 	</path>	
+	
+	<path id="libs">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="test-classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	    <pathelement path="${build.classes.dir}/" />
+		<pathelement path="${build.test.dir}/" />
+	</path>
 	
 	<path id="run.classpath">
 	        <pathelement location="${build.classes.dir}"/>
@@ -91,7 +106,9 @@
 		
 		<!-- Loo kasutad kompileeritud failidele -->
 		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.test.dir}"/>
 		<mkdir dir="${build.classes.dir}"/>
+		
 		
 		<!-- Kompileeri programm -->
 		<javac
@@ -278,13 +295,15 @@
 		<javac
             srcdir="${test.dir}"
             destdir="${build.test.dir}"
+			classpathref="libs"
             debug="true"
             debuglevel="lines,vars,source"
             encoding="utf-8"
             compiler="modern"
-            target="1.5"
-            source="1.5"
-        	classpathref="libs"
+            target="1.8"
+            source="1.8"
+			includeantruntime="false"
+        	
         >
 			<classpath>
 				<pathelement path="${build.classes.dir}" />
