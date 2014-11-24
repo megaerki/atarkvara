@@ -12,6 +12,7 @@
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="etc.dir" value="${basedir}/etc" />
 	<property name="test.dir"   value="${basedir}/test"/> 
+	<property name="build.test.dir"       value="${build.dir}/test"/>
 	
 	<!-- database variables -->
 	<property name="conf.dir" value="${basedir}/conf" />
