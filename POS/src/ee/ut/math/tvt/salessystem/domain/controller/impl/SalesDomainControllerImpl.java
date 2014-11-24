@@ -24,7 +24,7 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  * Implementation of the sales domain controller.
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
-	//static List<StockItem> dataset = new ArrayList<StockItem>();
+	 
 	public static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
 	private SalesSystemModel model;
 	private HistoryTableModel his;
