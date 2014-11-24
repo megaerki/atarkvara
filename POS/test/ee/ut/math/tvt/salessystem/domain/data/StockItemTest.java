@@ -18,18 +18,19 @@ public class StockItemTest {
 	  }
 	
 	@Test
-    public void testClone() throws CloneNotSupportedException{//failib
-		clone();
-		
-		
-		
-	
+    public void testClone() {
+		StockItem cloneItem = (StockItem) stockitem.clone();
+        assertEquals(stockitem.getId(), cloneItem.getId());
+        assertEquals(stockitem.getName(), cloneItem.getName());
+        assertEquals(stockitem.getDescription(), cloneItem.getDescription());
+        assertEquals(stockitem.getQuantity(), cloneItem.getQuantity());	
     	
     }
 	@Test
     public void testGetColumn(){
-		assertEquals(stockitem.getColumn(1),"Laua Viin");
-    	
+		assertEquals(stockitem.getColumn(1),"Laua Viin"); //nimi
+		assertEquals(stockitem.getColumn(2),5.0);		  //hind
+    	assertEquals(stockitem.getColumn(3),1);			  //kogus
     }
 
 }

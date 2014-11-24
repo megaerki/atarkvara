@@ -15,7 +15,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
-	private List<StockItem> stockItems;
+	private static List<StockItem> stockItems;
 	public StockTableModel() {
 		super(new String[] {"Id", "Name", "Price", "Quantity"});
 		stockItems = new ArrayList<StockItem>();
@@ -80,4 +80,14 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	public List<StockItem> getRows() {
         return stockItems;
 	}
+	
+	public static  boolean hasEnoughInStock(StockItem item, int quantity) { // NO_UCD
+		for(StockItem i : stockItems) {
+			if (i.getId().equals(item.getId())) {
+				return (i.getQuantity() >= quantity);
+			}
+		}
+		return false;	
+		
+	}	
 }
