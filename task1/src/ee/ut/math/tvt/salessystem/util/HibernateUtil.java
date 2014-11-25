@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.salessystem.util;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,10 +8,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-import ee.ut.math.tvt.a.Intro;
-
-import java.io.File;
-import java.util.Properties;
 /**
  * Utility class that makes sure we has a single open hibernate session.
  */

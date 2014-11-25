@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -72,10 +71,7 @@ public class SalesSystemUI extends JFrame {
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     setLocation((screen.width - width) / 2, (screen.height - height) / 2);
     
-    
-    
     addWindowListener(new WindowAdapter() {
-      @Override
       public void windowClosing(WindowEvent e) {
     	try{
     	dc.endSession();
@@ -89,11 +85,6 @@ public class SalesSystemUI extends JFrame {
   
   }
   
-
-
-  
-  
-
   private void drawWidgets() {
     JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -103,7 +94,6 @@ public class SalesSystemUI extends JFrame {
 
     getContentPane().add(tabbedPane);
   }
-
 }
 
 

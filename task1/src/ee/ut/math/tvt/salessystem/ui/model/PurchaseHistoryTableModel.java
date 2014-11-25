@@ -1,20 +1,19 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import org.apache.log4j.Logger;
+
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 
-/**
- * Purchase history details model.
- */
 public class PurchaseHistoryTableModel extends SalesSystemTableModel<SoldItem> {
 	private static final long serialVersionUID = 1L;
 
-//	private static final Logger log = Logger.getLogger(PurchaseHistoryTableModel.class);
+	@SuppressWarnings("unused")
+	private static final Logger log = Logger.getLogger(PurchaseHistoryTableModel.class);
 	
 	public PurchaseHistoryTableModel() {
 		super(new String[] { "Id", "Name", "Price", "Quantity","Sum"});
 	}
 
-	@Override
 	protected Object getColumnValue(SoldItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
@@ -31,7 +30,6 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<SoldItem> {
 		throw new IllegalArgumentException("Column index out of range");
 	}
 
-	@Override
 	public String toString() {
 		final StringBuffer buffer = new StringBuffer();
 

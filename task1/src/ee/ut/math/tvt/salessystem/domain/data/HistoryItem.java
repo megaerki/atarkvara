@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "HISTORYITEM")
 public class HistoryItem implements Cloneable, DisplayableItem {
 	
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +33,6 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	@OneToMany(mappedBy = "historyItem")
 	private List<SoldItem> soldItems;
 	
- 
 	public HistoryItem() {
 		
 	}
@@ -57,9 +53,7 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 		return time;
 	}
 
-	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
 		return id;
 	}
 
@@ -85,19 +79,5 @@ public class HistoryItem implements Cloneable, DisplayableItem {
 	public int getNumberOfElements() {
 		return NumberOfElements;
 	}
-	public static long size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	public static void add(HistoryItem newElem) {
-		// TODO Auto-generated method stub
-		
-	}
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
- 
-
 }
 	

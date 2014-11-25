@@ -13,11 +13,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
-
-
-
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -31,14 +26,19 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 
 public class StockTab {
+  @SuppressWarnings("unused")
   private static final Logger log = Logger.getLogger(StockTab.class);
+  
   private JButton addItem;
   private JTextField newItemID;
   private JTextField newItemName;
   private JTextField newItemPrice;
   private JTextField newItemQuantity;
   private JTextField newItemDescription;
+  
+  @SuppressWarnings("unused")
   private final SalesDomainController controller;
+  
   private SalesSystemModel model;
 
   public StockTab(SalesSystemModel model,  SalesDomainController controller) {

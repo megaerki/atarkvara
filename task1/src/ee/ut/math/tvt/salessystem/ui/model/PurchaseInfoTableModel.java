@@ -6,10 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 
-import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
-import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 
 public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
@@ -71,10 +68,8 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		    String insert = "INSERT INTO SOLDITEM(sale_id,name,quantity,itemprice)      VALUES ('"+item.getId()+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
 		    stmt.executeUpdate(insert);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

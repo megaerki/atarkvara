@@ -57,9 +57,6 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		fireTableDataChanged();
 	}
 
-	 
-	
-	@Override
 	public String toString() {
 		final StringBuffer buffer = new StringBuffer();
 
@@ -81,13 +78,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
         return stockItems;
 	}
 	
-	public static  boolean hasEnoughInStock(StockItem item, int quantity) { // NO_UCD
+	public boolean hasEnoughInStock(StockItem item, int quantity) {
 		for(StockItem i : stockItems) {
 			if (i.getId().equals(item.getId())) {
 				return (i.getQuantity() >= quantity);
 			}
 		}
-		return false;	
-		
+		return false;
 	}	
 }

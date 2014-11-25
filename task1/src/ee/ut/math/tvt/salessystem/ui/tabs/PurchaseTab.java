@@ -1,11 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
@@ -16,14 +12,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -44,40 +32,27 @@ import org.apache.log4j.Logger;
  */
 public class PurchaseTab {
 
-  private static final Logger log = Logger.getLogger(PurchaseTab.class);
-
-  private final SalesDomainController domainController;
-
-  private JButton newPurchase;
-
-  private JButton submitPurchase;
-
-  private JButton cancelPurchase;
-
-  private PurchaseItemPanel purchasePane;
-  
-  private StockItem stock;
- 
-  
-  private PurchaseInfoTableModel pur;
-  private SoldItem sold;
-
-  private SalesSystemModel model;
-  private SalesSystemModel model2;
-  public   boolean addCart;
-  private  static  double changeMoney;
-  private static String chanMoney;
-  List DB = new ArrayList();
-  
-  
-  
-  public PurchaseTab(SalesDomainController controller,
-      SalesSystemModel model)
-  {
-    this.domainController = controller;
-    this.model = model;
-  }
-
+	  private static final Logger log = Logger.getLogger(PurchaseTab.class);
+	
+	  private final SalesDomainController domainController;
+	
+	  private JButton newPurchase;
+	  private JButton submitPurchase;
+	  private JButton cancelPurchase;
+	  private PurchaseItemPanel purchasePane;
+	
+	  private SalesSystemModel model;
+	  public   boolean addCart;
+	  private  static  double changeMoney;
+	  private static String chanMoney;
+//	  List DB = new ArrayList();
+	  
+	  public PurchaseTab(SalesDomainController controller,
+	      SalesSystemModel model)
+	  {
+	    this.domainController = controller;
+	    this.model = model;
+	  }
 
   /**
    * The purchase tab. Consists of the purchase menu, current purchase dialog and
@@ -363,8 +338,8 @@ private void getBoolean(){
       //domainController.submitCurrentPurchase(model.getCurrentPurchaseTableModel().getTableRows());
       domainController.saveHistoryState(model.getCurrentPurchaseTableModel().getTableRows(),model);
       
-      List<SoldItem> k=model.getCurrentPurchaseTableModel().getTableRows();
-      DB.add(domainController.getAllHistoryItems().toArray());
+//      List<SoldItem> k  =model.getCurrentPurchaseTableModel().getTableRows();
+//      DB.add(domainController.getAllHistoryItems().toArray());
       
       endSale();   
       //System.out.println(model.getHistoryTableModel().getRowCount());

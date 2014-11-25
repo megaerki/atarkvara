@@ -1,13 +1,10 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -33,12 +30,6 @@ public class StockItem implements Cloneable, DisplayableItem {
     @Column(name = "Quantity")
     private int quantity;
     
-    //private double sum;
-    
-   // @OneToMany(mappedBy = "stockItem")
-   // private Set<SoldItem> soldItem;
- 
-    
     /**
      * Constucts new <code>StockItem</code> with the specified values.
      * @param id barcode id
@@ -54,13 +45,8 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.description = desc;
         this.price = price;
         this.quantity = quantity;
-        
     }
 
-
-    /**
-     * Constructs new  <code>StockItem</code>.
-     */
     public StockItem() {
     }
 
@@ -103,26 +89,13 @@ public class StockItem implements Cloneable, DisplayableItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    //public double getSum() {
-    //    return sum;
-    //}
 
-    //public void setSum(double price) {
-    //    this.sum = price;
-    //}
-	
-	
-		
-
-    @Override
 	public String toString() {
         return  name ;
     }
 //	public String toString() {
 //        return id + " " + name + " " + description + " " + price ; // vana praegusega kuvab ainult toote nime drop listis
 //    }
-
 
     /**
      * Method for querying the value of a certain column when StockItems are shown
@@ -141,13 +114,9 @@ public class StockItem implements Cloneable, DisplayableItem {
         }
     }
     
-    
-    @Override
 	public Object clone() {
         StockItem item =
             new StockItem(getId(), getName(), getDescription(), getPrice(), getQuantity());
         return item;
     }
-
-
 }
