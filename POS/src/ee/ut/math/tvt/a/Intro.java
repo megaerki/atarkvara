@@ -22,7 +22,6 @@ public class Intro {
 		
 		final SalesDomainController domainController = new SalesDomainControllerImpl();
 		
-		//Lisa JGoodies windowsi v2ljan2gemine Java default asemel
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e){

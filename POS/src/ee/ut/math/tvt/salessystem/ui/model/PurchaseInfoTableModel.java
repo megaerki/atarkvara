@@ -6,13 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 import ee.ut.math.tvt.salessystem.domain.data.HistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 
-/**
- * Purchase history details model.
- */
 public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +21,6 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		super(new String[] { "Id", "Name", "Price", "Quantity","Sum"});
 	}
 
-	@Override
 	protected Object getColumnValue(SoldItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
@@ -39,7 +37,6 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		throw new IllegalArgumentException("Column index out of range");
 	}
 
-	@Override
 	public String toString() {
 		final StringBuffer buffer = new StringBuffer();
 
@@ -55,19 +52,15 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 			buffer.append(item.getSum() + "\t");
 			buffer.append("\n");
 		}
-
 		return buffer.toString();
 	}
 	
-    /**
-     * Add new StockItem to table.
-     */
     public void addItem(final SoldItem item) {
         /**
          * XXX In case such stockItem already exists increase the quantity of the
          * existing stock.
          */
-
+    	
         rows.add(item);
         log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
         fireTableDataChanged();
@@ -77,35 +70,13 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		    Statement stmt = (Statement) con.createStatement();
 		    String insert = "INSERT INTO SOLDITEM(sale_id,name,quantity,itemprice)      VALUES ('"+item.getId()+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
 		    stmt.executeUpdate(insert);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    }
-
-	public void addItem(HistoryItem newElem) {
-		// TODO Auto-generated method stub
-		
-	}
-	public void addItemDB(final SoldItem item) {
-		try{
-	    Class.forName("org.hsqldb.jdbc.JDBCDriver");
-	    Connection con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/POS","SA","");
-	    Statement stmt = (Statement) con.createStatement();
-	    String insert = "INSERT INTO SOLDITEM(sale_id,name,quantity,itemprice)      VALUES ('"+item.getId()+"','"+item.getName()+"','"+item.getQuantity()+"','"+item.getPrice()+"');";
-	    stmt.executeUpdate(insert);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch(NullPointerException e){
-			
 		}
-		
-	}
+    }
+
 }

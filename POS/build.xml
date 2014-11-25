@@ -2,25 +2,25 @@
 <project basedir="." name="POS" default="build">
 
 	<!-- Defineeri muutujad -->
-	<property name="build.dir" value="${basedir}/build"/>
-	<property name="build.classes.dir" value="${build.dir}/classes"/>
-	<property name="src.dir" value="${basedir}/src"/>
-	<property name="dist.dir" value="${basedir}/build/jar"/>
-	<property name="doc.dir" value="${build.dir}/doc"/>
-	<property name="img.dir" value="${basedir}/img"/>
-	<property name="test.reports.dir" value="${build.dir}/reports/"/>
-	<property name="lib.dir" value="${basedir}/lib" />
-	<property name="etc.dir" value="${basedir}/etc" />
-	<property name="test.dir"   value="${basedir}/test"/> 
-	<property name="build.test.dir"       value="${build.dir}/test"/>
+	<property name="build.dir" 				value="${basedir}/build"/>
+	<property name="build.classes.dir" 		value="${build.dir}/classes"/>
+	<property name="src.dir" 				value="${basedir}/src"/>
+	<property name="dist.dir" 				value="${basedir}/build/jar"/>
+	<property name="doc.dir" 				value="${build.dir}/doc"/>
+	<property name="img.dir" 				value="${basedir}/img"/>
+	<property name="test.reports.dir" 		value="${build.dir}/reports/"/>
+	<property name="lib.dir" 				value="${basedir}/lib" />
+	<property name="etc.dir" 				value="${basedir}/etc" />
+	<property name="test.dir"   			value="${basedir}/test"/> 
+	<property name="build.test.dir"      	value="${build.dir}/test"/>
 	
-	<!-- database variables -->
-	<property name="conf.dir" value="${basedir}/conf" />
-	<property name="data.dir"	value="${basedir}/data"/>
-	<property name="db.file"	value="${data.dir}/POSdb"/>
-	<property name="db.alias"	value="POS"/>
-	<property name="db.url" 	value="jdbc:hsqldb:hsql://localhost/POS"/>
-	<property name="lib.hibernate.dir"   value="${lib.dir}/hibernate"/>
+	<!-- Andmebaasi muutujad -->
+	<property name="conf.dir" 				value="${basedir}/conf" />
+	<property name="data.dir"				value="${basedir}/data"/>
+	<property name="db.file"				value="${data.dir}/POSdb"/>
+	<property name="db.alias"				value="POS"/>
+	<property name="db.url" 				value="jdbc:hsqldb:hsql://localhost/POS"/>
+	<property name="lib.hibernate.dir"   	value="${lib.dir}/hibernate"/>
 	
 
 <!-- _______________________________________________________________________________________ -->
@@ -31,19 +31,16 @@
 		<pathelement location="${etc.dir}"/>
 		<pathelement location="${img.dir}"/>
 		<pathelement location="${conf.dir}"/>
+		
 		<fileset dir="${lib.dir}">
-	        <include name="**/*.jar"/>
+	    	<include name="**/*.jar"/>
 	    </fileset>
+		
 		<fileset dir="${lib.hibernate.dir}">
-			             <include name="*.jar"/>
-			        </fileset>
+        	<include name="*.jar"/>
+        </fileset>
+		
 	</path>	
-	
-	<path id="libs">
-		<fileset dir="${lib.dir}">
-			<include name="*.jar"/>
-		</fileset>
-	</path>
 	
 	<path id="test-classpath">
 		<fileset dir="${lib.dir}">
@@ -53,29 +50,6 @@
 		<pathelement path="${build.test.dir}/" />
 	</path>
 	
-	<path id="run.classpath">
-	        <pathelement location="${build.classes.dir}"/>
-	        <!-- configuration -->
-	        <pathelement location="${conf.dir}"/>
-	        <fileset dir="${lib.dir}">
-	            <include name="*.jar"/>
-	        </fileset>
-
-	        <fileset dir="${lib.hibernate.dir}">
-	             <include name="*.jar"/>
-	        </fileset>
-	</path>
-	
-	<path id="compile.classpath">
-	        <fileset dir="${lib.dir}">
-	            <include name="*.jar"/>
-	        </fileset>
-
-        <fileset dir="${lib.hibernate.dir}">
-             <include name="*.jar"/>
-        </fileset>
-		
-		</path>
 <!-- ______________________________________RUNC______________________________________________ -->
 	
 	<!-- Käivita programm konsoolis -->
@@ -267,49 +241,55 @@
 		</exec>
 		
 	</target>
+	
 	<!-- _____________________________________DB MANAGER___________________________________________ -->
 	
 	<target name="dbmanager" description="Start the HSQLDB manager">
-	        <java
-	            classname="org.hsqldb.util.DatabaseManagerSwing"
-	            classpathref="run.classpath"
-	            fork="yes"
-	        >
-	            <arg line="--user sa --url ${db.url}" />
-	        </java>
-	    </target>
+		
+        <java
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            classpathref="run.classpath"
+            fork="yes">
+        	
+            <arg line="--user sa --url ${db.url}" />
+        	
+        </java>
+		
+    </target>
 	
 	<!-- _____________________________________DB START___________________________________________ -->
 		
     <target name="startdb" description="Start the HSQLDB with the default params">
+    	
         <java
             classname="org.hsqldb.Server"
-            classpathref="run.classpath"
-            fork="yes"
-        >
+            classpathref="POS.classpath"
+            fork="yes">
+        	
             <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
+        	
         </java>
-</target>
+    	
+	</target>
+	
 	<!-- _____________________________________BUILD TESTS___________________________________________ -->
 	
 	<target name="build-tests" depends="build" description="Build the system">
+		
 		<javac
             srcdir="${test.dir}"
             destdir="${build.test.dir}"
-			classpathref="libs"
-            debug="true"
+			classpathref="POS.classpath"
+			debug="true"
             debuglevel="lines,vars,source"
             encoding="utf-8"
             compiler="modern"
             target="1.8"
             source="1.8"
-			includeantruntime="false"
-        	
-        >
-			<classpath>
-				<pathelement path="${build.classes.dir}" />
-			</classpath>
+			includeantruntime="false">
+			<classpath refid="POS.classpath"/>
 		</javac>
+		
 	</target>
 	
 	<!-- _____________________________________TEST___________________________________________ -->
@@ -317,16 +297,19 @@
 	<target name="test" depends="build-tests" description="Run the template application">
 
 		<junit>
+			
 			<classpath refid="test-classpath" />
-
 			<formatter type="brief" usefile="false" />
+			
 			<batchtest>
 				<fileset dir="${build.test.dir}" includes="**/*.class" />
 			</batchtest>
+			
 		</junit>
 
-
 	</target>
+	
+	<!-- _____________________________________END___________________________________________ -->
 	
 </project>
 

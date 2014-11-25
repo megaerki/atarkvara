@@ -19,10 +19,6 @@ import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
-
-/**
- * Implementation of the sales domain controller.
- */
 public class SalesDomainControllerImpl implements SalesDomainController {
 	 
 	public static List<HistoryItem> historydataset = new ArrayList<HistoryItem>();
@@ -45,7 +41,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		// cannot buy chupa-chups
 		//  throw new VerificationFailedException("Underaged!");
 		// XXX - Save purchase
-	
 	}
 
 	public void submitHistory(List<SoldItem> goods, SalesSystemModel model) {
@@ -106,19 +101,16 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	//	return historydataset;
 	//}
 
-	@Override
 	public List<HistoryItem> loadDetailedDeatailHistoryState() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public List<SoldItem> loadDetailedHistoryState() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void saveHistoryState(List<SoldItem> tableRows,
 			SalesSystemModel model) {
 		Date date = new Date();
@@ -137,11 +129,9 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void endSession() {
-		
 	    HibernateUtil.closeSession();
 	}
 	
@@ -149,7 +139,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		return session;
 	}
 
-	@Override
 	public void setModel(SalesSystemModel model) {
 		// TODO Auto-generated method stub
 		this.model = model;
