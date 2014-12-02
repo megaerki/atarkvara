@@ -52,6 +52,14 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		return buffer.toString();
 	}
 	
+	public double getSum(){
+		double result = 0.0;
+		for (final SoldItem item : rows){
+			result += item.getSum();
+		}
+		return result;
+	}
+		
     public void addItem(final SoldItem item) {
         /**
          * XXX In case such stockItem already exists increase the quantity of the
